@@ -1,0 +1,51 @@
+<!--
+  Generated template for the FeedbackHistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Feedback-history</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        {{oldSubject}}
+      </ion-card-title>
+      <p>
+        {{oldMessage}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Escalate to</ion-label>
+      <ion-select [(ngModel)]="selectedTeamMember">
+        <ion-option *ngFor="let index of teamUserList" [value]="index"> {{index.name}} </ion-option>
+      </ion-select>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-label>Feedback Category</ion-label>
+        <ion-select [(ngModel)]="selectedFeedbackCategory">
+          <ion-option  *ngFor="let index of feedbackCategoryList" [value]="index" > {{index.name}} </ion-option>
+        </ion-select>
+      </ion-item> -->
+    <!-- <ion-item>
+        <ion-input placeholder="Enter Subject" [(ngModel)]="subject"></ion-input>
+      </ion-item> -->
+    <ion-item>
+      <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)='submitFeedback()'>Submit</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
