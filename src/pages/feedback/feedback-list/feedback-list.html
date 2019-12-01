@@ -44,7 +44,6 @@
         <ion-list *ngSwitchCase="'feedbacksForMe'">
           <button ion-item  *ngFor="let index of feedbackForMe" (click)="feedbackSelected(index.id)">
               <h2>{{ index.message }}</h2>
-                <p> TO :{{index.createdForName}}</p>
                 <p> Category :{{index.feedbackCategoryName}}</p>
           </button> 
         </ion-list>

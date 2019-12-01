@@ -48,8 +48,12 @@ export class FeedbackHistoryPage {
   {
     this.escalateReq=true;
   }
+  default(){
+    localStorage.setItem("SectionToBeSelected",  "myFeedbacks");
+  }
 
   async ionViewDidLoad() {
+    this.default();
     console.log('ionViewDidLoad FeedbackHistoryPage');
     let reqObj = new RequestModelComponent();
     reqObj.device_id = "abc";
@@ -69,7 +73,8 @@ export class FeedbackHistoryPage {
     this.oldSubject = fcRespObj.feedbackDetails.subject;
     this.oldMessage = fcRespObj.feedbackDetails.message;
     this.oldCategory= fcRespObj.feedbackDetails.feedbackCategoryName;
-    this.oldCreatedFor= fcRespObj.feedbackDetails.createdForName;
+    if(this.user_id!=fcRespObj.feedbackDetails.createdFor){
+    this.oldCreatedFor="To :"+ fcRespObj.feedbackDetails.createdForName;}
     let respObj = await this.feedbackServiceCall.teamList(reqObj);
     if (respObj.status_code == 200) {
       this.teamUserList = respObj.userList;

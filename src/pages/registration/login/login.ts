@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RequestModelComponent, VerifyOTPReq } from './../../../components/request-model/request-model';
 import { AuthenticationServiceProvider } from './../../../providers/authentication-service/authentication-service';
+import { FormControl } from '@angular/forms';
+import { Events } from 'ionic-angular';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -19,7 +22,7 @@ export class LoginPage {
   public otp_entered = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public AuthServiceCall: AuthenticationServiceProvider) {
+    public AuthServiceCall: AuthenticationServiceProvider,public events: Events) {
   }
 
   ionViewDidLoad() {
@@ -53,6 +56,9 @@ export class LoginPage {
     if (respObj.status_code == 200) {
       localStorage.setItem("user_id", String(user_id));
       localStorage.setItem("token", respObj.token);
+      localStorage.setItem("user_name", respObj.name);
+      console.log(respObj.name);
+      this.events.publish('UserName', respObj.name, Date.now());
       this.navCtrl.push('LandingPage');
     }
     else {

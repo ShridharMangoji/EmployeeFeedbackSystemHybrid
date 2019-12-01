@@ -5,6 +5,10 @@ export class ResponseModelComponent {
     token:string;
   }
 
+  export class VerifyOTPResp extends ResponseModelComponent {
+    name: string;
+  }
+
   export class TeamListResponse extends ResponseModelComponent{
     userList:KeyValuePair[];
   }

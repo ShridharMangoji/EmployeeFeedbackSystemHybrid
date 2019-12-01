@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RequestModelComponent } from './../../components/request-model/request-model';
 import { AuthenticationServiceProvider } from './../../providers/authentication-service/authentication-service';
+import { FeedbackServiceProvider } from './../../providers/feedback-service/feedback-service';
+
+
 //import { EscalatedUserListResp,ResponseModelComponent } from './../../components/response-model/response-model';
 
 /**
@@ -20,9 +23,12 @@ export class LandingPage {
   get user_id() {
     return Number(localStorage.getItem("user_id"));
   }
+  default(){
+    localStorage.setItem("SectionToBeSelected", "myFeedbacks");
+  }
   public escalated = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public authCall: AuthenticationServiceProvider) {
+    public authCall: AuthenticationServiceProvider,public feedbackServiceCall : FeedbackServiceProvider) {
 
 
   }
@@ -32,9 +38,10 @@ export class LandingPage {
     reqObj.device_id = "abc";
     reqObj.os_type = "Android";
     reqObj.user_id = this.user_id;
-    let respObj = await this.authCall.escalationUserListCall(reqObj);
+    let respObj = await this.feedbackServiceCall.FeedbackDetailList(reqObj);
     if (respObj.status_code == 200) {
-      if (respObj.userList.length > 0) {
+      console.log(respObj.feedbackEscalatedToMe.length )
+      if (respObj.feedbackEscalatedToMe.length > 0) {
         this.escalated = true;
       } else {
         this.escalated = false;
@@ -44,6 +51,7 @@ export class LandingPage {
   }
 
   async ionViewDidLoad() {
+   this.default();
     console.log('ionViewDidLoad LandingPage');
     this.escalatedUserList();
   }
@@ -52,6 +60,7 @@ export class LandingPage {
   }
 
   escalatedFeedbackList(){
-    this.navCtrl.push('EscalatedUserPage');
+    localStorage.setItem("SectionToBeSelected", "escalatedFeedback");
+    this.navCtrl.push('FeedbackListPage');
   }
 }

@@ -22,7 +22,7 @@
           Category : {{oldCategory}}
       </p>
       <p>
-      To : {{oldCreatedFor}}
+      {{oldCreatedFor}}
       </p>
     </ion-card-content>
   </ion-card>
@@ -61,8 +61,6 @@
         </ion-item> -->
     <ion-item>
       <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message">{{message}}</ion-textarea>
-    </ion-item>
-    <ion-item>
     </ion-item>
     <ion-item>
       <button ion-button (click)='escalate()'>Escalate</button>

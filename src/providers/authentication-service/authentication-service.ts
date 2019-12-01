@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { constants } from './../../helper/constants';
 import { RequestModelComponent,VerifyOTPReq } from './../../components/request-model/request-model';
-import {ResponseModelComponent,EscalatedUserListResp,TeamListResponse,FeedbackListResponse} from './../../components/response-model/response-model';
+import {ResponseModelComponent,EscalatedUserListResp,VerifyOTPResp,FeedbackListResponse} from './../../components/response-model/response-model';
 
 /*
   Generated class for the AuthenticationServiceProvider provider.
@@ -60,14 +60,14 @@ export class AuthenticationServiceProvider {
   }
 
 
- async verifyOTP (body: VerifyOTPReq) :Promise<ResponseModelComponent>{
+ async verifyOTP (body: VerifyOTPReq) :Promise<VerifyOTPResp>{
     let requestURL = constants.BaseURL + constants.VerifyOTP;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
     let options = { headers: headers };
-    const resp= await this.http.post<ResponseModelComponent>(requestURL, requestBody, options).toPromise();
+    const resp= await this.http.post<VerifyOTPResp>(requestURL, requestBody, options).toPromise();
     return resp;
     // const req= this.http.post<ResponseModelComponent>(requestURL, requestBody, options)
     // .subscribe(
