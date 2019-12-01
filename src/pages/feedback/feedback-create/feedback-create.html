@@ -28,9 +28,9 @@
         <ion-option  *ngFor="let index of feedbackCategoryList" [value]="index" > {{index.name}} </ion-option>
       </ion-select>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-input placeholder="Enter Subject" [(ngModel)]="subject"></ion-input>
-    </ion-item>
+    </ion-item> -->
     <ion-item>
       <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message"></ion-textarea>
     </ion-item>

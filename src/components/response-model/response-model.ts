@@ -9,6 +9,14 @@ export class ResponseModelComponent {
     userList:KeyValuePair[];
   }
 
+  export class FeedbackDetailListResp extends ResponseModelComponent{
+    isEscalationRequired:boolean;
+    feedbackCreatedByMe:feedback[];
+    feedbackCreatedForMe:feedback[];
+    feedbackEscalatedToMe:feedback[];
+  }
+
+
   export class EscalatedUserListResp extends ResponseModelComponent{
     userList:KeyValuePair[];
   }
@@ -18,6 +26,7 @@ export class ResponseModelComponent {
   }
 
   export class FeedbackHistoryResp extends ResponseModelComponent{
+    isEscalationAllowed:boolean;
     feedbackDetails:feedback;
     feedbackEscalationHistory: FeedbackEscalationMapping[];
   }

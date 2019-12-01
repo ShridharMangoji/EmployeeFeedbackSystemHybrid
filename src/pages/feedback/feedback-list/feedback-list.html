@@ -22,92 +22,39 @@
           <ion-segment-button value="feedbacksForMe">
             Feedback For Me
           </ion-segment-button>
-          <ion-segment-button value="escalatedFeedback">
+          
+          <ion-segment-button value="escalatedFeedback" [hidden]="!isEscalationRequired">
+            
             Escalated Feedbacks
+            
           </ion-segment-button>
+        
         </ion-segment>
       </ion-toolbar>
     
       <div [ngSwitch]="pet">
-        <ion-list *ngSwitchCase="'myFeedbacks'">
-          <ion-item (click)="feedbackSelected('feedback')">
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-puppy-1.jpg">
-            </ion-thumbnail>
-            <h2>Ruby</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-puppy-2.jpg">
-            </ion-thumbnail>
-            <h2>Oscar</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-puppy-4.jpg">
-            </ion-thumbnail>
-            <h2>Zoey</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-puppy-3.jpg">
-            </ion-thumbnail>
-            <h2>Otto</h2>
-          </ion-item>
-        </ion-list>
+          <ion-list *ngSwitchCase="'myFeedbacks'">
+            <button ion-item  *ngFor="let index of feedbackByMe" (click)="feedbackSelected(index.id)">
+                <h2>{{ index.message }}</h2>
+                <p> TO :{{index.createdForName}}</p>
+                <p> Category :{{index.feedbackCategoryName}}</p>
+            </button>  
+          </ion-list>
     
         <ion-list *ngSwitchCase="'feedbacksForMe'">
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-kitten-1.jpg">
-            </ion-thumbnail>
-            <h2>Luna</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-kitten-3.jpg">
-            </ion-thumbnail>
-            <h2>Milo</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-kitten-4.jpg">
-            </ion-thumbnail>
-            <h2>Bandit</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-kitten-2.jpg">
-            </ion-thumbnail>
-            <h2>Nala</h2>
-          </ion-item>
+          <button ion-item  *ngFor="let index of feedbackForMe" (click)="feedbackSelected(index.id)">
+              <h2>{{ index.message }}</h2>
+                <p> TO :{{index.createdForName}}</p>
+                <p> Category :{{index.feedbackCategoryName}}</p>
+          </button> 
         </ion-list>
     
         <ion-list *ngSwitchCase="'escalatedFeedback'">
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-duckling-1.jpg">
-            </ion-thumbnail>
-            <h2>Daffy</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-duckling-2.jpg">
-            </ion-thumbnail>
-            <h2>Huey</h2>
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-duckling-3.jpg">
-            </ion-thumbnail>
-            <h2>Dewey</h2>
-          </ion-item>
-          <ion-item (click)="feedbackSelected('feedback')">
-            <ion-thumbnail item-start>
-              <img src="assets/img/thumbnail-duckling-4.jpg">
-            </ion-thumbnail>
-            <h2>Louie</h2>
-          </ion-item>
+          <button ion-item  *ngFor="let index of feedbackEscalated" (click)="feedbackSelected(index.id)">
+              <h2>{{ index.message }}</h2>
+              <p> TO :{{index.createdForName}}</p>
+              <p> Category :{{index.feedbackCategoryName}}</p>
+          </button> 
         </ion-list>
       </div>
    

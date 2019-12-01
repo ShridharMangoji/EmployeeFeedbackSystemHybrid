@@ -1,3 +1,4 @@
+import { KeyValuePair } from "../response-model/response-model";
 
 /**
  * Generated class for the RequestModelComponent component.
@@ -44,6 +45,11 @@ export class feedback{
   createdFor: Number;
   createdBy: Number;
   feedbackCategoryId:Number;
+  createdForName:String;
+  feedbackCategoryName:String;
+  
+  // createdForNavigation:KeyValuePair;
+  // feedbackCategory:KeyValuePair;
 }
 export class FeedbackEscalationMapping{
   Id: Number;
@@ -51,5 +57,4 @@ export class FeedbackEscalationMapping{
   Message: String;
   FeedbackId: Number;
   EscalatedUserId: Number;
- 
 }

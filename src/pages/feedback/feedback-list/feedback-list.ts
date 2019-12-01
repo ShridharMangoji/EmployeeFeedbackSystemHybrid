@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { RequestModelComponent, feedback, feedbackInfo, FeedbackEscalationMapping } from './../../../components/request-model/request-model';
+import { FeedbackServiceProvider } from './../../../providers/feedback-service/feedback-service';
+import { FeedbackDetailListResp} from './../../../components/response-model/response-model';
 /**
  * Generated class for the FeedbackListPage page.
  *
@@ -15,33 +17,41 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FeedbackListPage {
   pet: string = "myFeedbacks";
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  get user_id() {
+    return Number(localStorage.getItem("user_id"));
+  }
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public feedbackServiceCall: FeedbackServiceProvider) {
   }
 
-  ionViewDidLoad() {
+   feedbackByMe:feedback[];
+   feedbackForMe:feedback[];
+   feedbackEscalated:feedback[];
+   isEscalationRequired=false;
+ 
+   async ionViewDidLoad() {
     console.log('ionViewDidLoad FeedbackListPage');
+    let reqObj = new RequestModelComponent();
+    reqObj.device_id = "abc";
+    reqObj.os_type = "Android";
+    reqObj.user_id = this.user_id;
+    var respObj = await this.feedbackServiceCall.FeedbackDetailListv2(reqObj);
+    console.log(respObj);
+   
+    if(respObj.status_code==200)
+    {
+      this.isEscalationRequired=respObj.isEscalationRequired;
+       this.feedbackByMe=respObj.feedbackCreatedByMe;
+       this.feedbackForMe=respObj.feedbackCreatedForMe;
+       this.feedbackEscalated=respObj.feedbackEscalatedToMe;
+    }
   }
-
-  feedbackList = ['Pokémon Yellow',
-    'Super Metroid',
-    'Mega Man X',
-    'The Legend of Zelda',
-    'Pac-Man',
-    'Super Mario World',
-    'Street Fighter II',
-    'Half Life',
-    'Final Fantasy VII',
-    'Star Fox',
-    'Tetris',
-    'Donkey Kong III',
-    'GoldenEye 007',
-    'Doom',
-    'Fallout',
-    'GTA',
-    'Halo'];
 
   feedbackSelected(item: string) {
-    this.navCtrl.push('FeedbackHistoryPage')
+    console.log(item);
+    localStorage.setItem("selected_feedback_id", String(item));
+    
+    this.navCtrl.push('FeedbackHistoryPage');
   }
 
 }

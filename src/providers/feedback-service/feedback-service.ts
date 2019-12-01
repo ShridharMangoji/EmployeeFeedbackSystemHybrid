@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { constants } from './../../helper/constants';
 import { RequestModelComponent ,giveFeedback} from './../../components/request-model/request-model';
-import {ResponseModelComponent,TeamListResponse,feedbackCategoryResponse,FeedbackHistoryResp} from './../../components/response-model/response-model';
+import {ResponseModelComponent,TeamListResponse,feedbackCategoryResponse,FeedbackHistoryResp,FeedbackDetailListResp} from './../../components/response-model/response-model';
 
 
 /*
@@ -20,6 +20,7 @@ export class FeedbackServiceProvider {
 
   async teamList (body: RequestModelComponent) :Promise<TeamListResponse>{
     let requestURL = constants.BaseURL + constants.TeamList;
+    debugger;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -29,8 +30,30 @@ export class FeedbackServiceProvider {
     return resp;
   }
 
+   FeedbackDetailList (body: RequestModelComponent) :Promise<FeedbackDetailListResp>{
+    let requestURL = constants.BaseURL + "Feedback/FeedbackDetailList";
+    debugger;
+    let requestBody = JSON.stringify(body);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    let resp=  this.http.post<FeedbackDetailListResp>(requestURL, requestBody, options).toPromise();
+    return resp;
+  }
+public  FeedbackDetailListv2 (body: RequestModelComponent) :Promise<FeedbackDetailListResp>{
+    let requestURL = constants.BaseURL + "Feedback/FeedbackDetailList";
+    debugger;
+    let requestBody = JSON.stringify(body);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    let resp=  this.http.post<FeedbackDetailListResp>(requestURL, requestBody, options).toPromise();
+    return resp;
+  }
   async FeedbackEscalationTeam (body: RequestModelComponent) :Promise<TeamListResponse>{
-    let requestURL = constants.BaseURL + constants.TeamList;
+    let requestURL = constants.BaseURL + constants.EscalatedUserList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -65,9 +88,7 @@ export class FeedbackServiceProvider {
   }
 
   async giveFeedback (body: giveFeedback) :Promise<ResponseModelComponent>{
-    body.feedback_id=0;
-    body.feedback_info.Id=0;
-    body.feedback_info.StatusId=1;
+    
     let requestURL = constants.BaseURL + constants.UpdateFeedback;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({

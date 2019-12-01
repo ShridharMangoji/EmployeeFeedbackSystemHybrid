@@ -8,5 +8,6 @@ export const constants = {
     FeedbackCategory:"Feedback/GetFeedbackCategories",
     EscalatedUserList:"User/EscalatedUserList",
     FeedbackList:"Feedback/FeedbackList",
-    FeedbackHistory:"Feedback/FeedbackHistory"
+    FeedbackHistory:"Feedback/FeedbackHistory",
+    FeedbackDetailList:"Feedback/FeedbackDetailList"
   };

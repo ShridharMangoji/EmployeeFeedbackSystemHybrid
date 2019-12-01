@@ -16,36 +16,56 @@
   <ion-card>
     <ion-card-content>
       <ion-card-title>
-        {{oldSubject}}
+        {{oldMessage}}
       </ion-card-title>
       <p>
-        {{oldMessage}}
+          Category : {{oldCategory}}
+      </p>
+      <p>
+      To : {{oldCreatedFor}}
       </p>
     </ion-card-content>
   </ion-card>
 
+  <div *ngIf="is_escalated_messages">
+    <ion-list inset *ngFor="let item of feedbackEscalatedMessages">
+      <ion-item>
+        <ion-label stacked>{{item.message}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 
-  <ion-list>
+
+
+  <div text-center="" *ngIf="is_escalation_required">
+    <ion-label>Is issue resolved</ion-label>
+    <button ion-button (click)="CloseLead()">Yes</button>
+    <button ion-button (click)="escalateFeedBack()">No</button>
+  </div>
+
+  <ion-list *ngIf="escalateReq">
     <ion-item>
       <ion-label>Escalate to</ion-label>
       <ion-select [(ngModel)]="selectedTeamMember">
-        <ion-option *ngFor="let index of teamUserList" [value]="index"> {{index.name}} </ion-option>
+        <ion-option *ngFor="let index of teamUserList" [value]="index.id"> {{index.name}} </ion-option>
       </ion-select>
     </ion-item>
     <!-- <ion-item>
-        <ion-label>Feedback Category</ion-label>
-        <ion-select [(ngModel)]="selectedFeedbackCategory">
-          <ion-option  *ngFor="let index of feedbackCategoryList" [value]="index" > {{index.name}} </ion-option>
-        </ion-select>
-      </ion-item> -->
+          <ion-label>Feedback Category</ion-label>
+          <ion-select [(ngModel)]="selectedFeedbackCategory">
+            <ion-option  *ngFor="let index of feedbackCategoryList" [value]="index" > {{index.name}} </ion-option>
+          </ion-select>
+        </ion-item> -->
     <!-- <ion-item>
-        <ion-input placeholder="Enter Subject" [(ngModel)]="subject"></ion-input>
-      </ion-item> -->
+          <ion-input placeholder="Enter Subject" [(ngModel)]="subject"></ion-input>
+        </ion-item> -->
     <ion-item>
-      <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message"></ion-textarea>
+      <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message">{{message}}</ion-textarea>
     </ion-item>
     <ion-item>
-      <button ion-button (click)='submitFeedback()'>Submit</button>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)='escalate()'>Escalate</button>
     </ion-item>
   </ion-list>
 </ion-content>

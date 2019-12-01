@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { KeyValuePair } from './../../../components/response-model/response-model';
 import { FeedbackServiceProvider } from './../../../providers/feedback-service/feedback-service';
-import { RequestModelComponent, giveFeedback, feedbackInfo } from './../../../components/request-model/request-model';
+import { RequestModelComponent, giveFeedback, feedbackInfo, FeedbackEscalationMapping } from './../../../components/request-model/request-model';
 
 /**
  * Generated class for the FeedbackHistoryPage page.
@@ -29,10 +29,24 @@ export class FeedbackHistoryPage {
   public feedbackCategoryList: KeyValuePair[];
   public oldSubject: String;
   public oldMessage: String;
-  public selectedTeamMember: KeyValuePair;
+  public oldCategory: String;
+  public oldCreatedFor: String;
+  public subject: String;
+  public message: String;
+  public selectedTeamMember: Number;
   public selectedFeedbackCategory: KeyValuePair;
+  public feedbackEscalatedMessages: FeedbackEscalationMapping[];
+  public is_escalated_messages = false;
+  public is_escalation_required = false;
+  public escalateReq = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public feedbackServiceCall: FeedbackServiceProvider) {
+  }
+
+  escalateFeedBack()
+  {
+    this.escalateReq=true;
   }
 
   async ionViewDidLoad() {
@@ -44,11 +58,19 @@ export class FeedbackHistoryPage {
     reqObj.feedback_id = this.selected_feedback_id;
 
     let fcRespObj = await this.feedbackServiceCall.FeedbackHistory(reqObj);
-    JSON.stringify(fcRespObj);
-   
-   this.oldSubject = fcRespObj.feedbackDetails.subject;
+    if (fcRespObj.feedbackEscalationHistory!=null||fcRespObj.feedbackEscalationHistory.length > 0) {
+      this.is_escalated_messages = true;
+      this.feedbackEscalatedMessages = fcRespObj.feedbackEscalationHistory;
+    }
+    if (fcRespObj.isEscalationAllowed == true) {
+      this.is_escalation_required = true;
+    }
+
+    this.oldSubject = fcRespObj.feedbackDetails.subject;
     this.oldMessage = fcRespObj.feedbackDetails.message;
-    let respObj = await this.feedbackServiceCall.FeedbackEscalationTeam(reqObj);
+    this.oldCategory= fcRespObj.feedbackDetails.feedbackCategoryName;
+    this.oldCreatedFor= fcRespObj.feedbackDetails.createdForName;
+    let respObj = await this.feedbackServiceCall.teamList(reqObj);
     if (respObj.status_code == 200) {
       this.teamUserList = respObj.userList;
       //this.feedbackCategoryList=fcRespObj.feedback_categories;
@@ -58,14 +80,59 @@ export class FeedbackHistoryPage {
       console.log("teamList is not fetched");
     }
   }
+
+  async escalateFeedback() {
+
+    let reqObj = new giveFeedback();
+    reqObj.device_id = "abc";
+    reqObj.os_type = "Android";
+    reqObj.user_id = this.user_id;
+    reqObj.feedback_info = new feedbackInfo();
+    reqObj.feedback_info.Message = this.message;
+    reqObj.feedback_info.Subject = this.subject;
+    reqObj.feedback_info.CreatedFor = this.selectedTeamMember;
+    //reqObj.feedback_info.FeedbackCategoryId = this.selectedFeedbackCategory.id;
+    reqObj.feedback_info.CreatedBy = this.user_id;
+    reqObj.feedback_id = this.selected_feedback_id;
+    reqObj.feedback_info.Id = this.selected_feedback_id;
+    reqObj.feedback_info.StatusId = 2;
+    let respObj = await this.feedbackServiceCall.giveFeedback(reqObj);
+    if(respObj.status_code=200)
+    {
+      this.navCtrl.push('LandingPage');
+    }
+
+  }
+
   escalate() {
     this.showConfirm();
   }
 
+  async CloseLead() {
+    let reqObj = new giveFeedback();
+    reqObj.device_id = "abc";
+    reqObj.os_type = "Android";
+    reqObj.user_id = this.user_id;
+    reqObj.feedback_info = new feedbackInfo();
+    // reqObj.feedback_info.Message=this.message;
+    // reqObj.feedback_info.Subject=this.subject;
+    //reqObj.feedback_info.CreatedFor = this.selectedTeamMember.id;
+    // reqObj.feedback_info.FeedbackCategoryId = this.selectedFeedbackCategory.id;
+    // reqObj.feedback_info.CreatedBy = this.user_id;
+    reqObj.feedback_id = this.selected_feedback_id;
+    reqObj.feedback_info.Id = this.selected_feedback_id;
+    reqObj.feedback_info.StatusId = 3;
+    console.log(this.selected_feedback_id);
+    let respObj = await this.feedbackServiceCall.giveFeedback(reqObj);
+    if (respObj.status_code = 200) {
+      this.navCtrl.push('LandingPage')
+    }
+  }
+
   showConfirm() {
     const confirm = this.alertCtrl.create({
-      title: 'Use this lightsaber?',
-      message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
+      title: 'Do you want to submit?',
+      message: 'Are you sure, You want to submit this feedback?',
       buttons: [
         {
           text: 'Disagree',
@@ -76,7 +143,7 @@ export class FeedbackHistoryPage {
         {
           text: 'Agree',
           handler: () => {
-            this.navCtrl.push('FeedbackListPage')
+            this.escalateFeedback();
           }
         }
       ]

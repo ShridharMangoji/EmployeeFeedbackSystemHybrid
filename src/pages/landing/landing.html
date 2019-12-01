@@ -9,7 +9,7 @@
     <button ion-button menuToggle icon-only start>
       <ion-icon name='menu'></ion-icon>
     </button>
-    <ion-title text-center>Landing Page</ion-title>
+    <ion-title text-center>Give Feedback</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -18,7 +18,7 @@
     <ion-item text-center>
       <button ion-button (click)='giveFeedback()'>Give Feedback</button>
     </ion-item>
-    <ion-item  text-center  *ngIf="escalated">
+    <ion-item  text-center  *ngIf="false">
       <button ion-button (click)='escalatedFeedbackList()'>Escalated</button>
     </ion-item>
   </ion-list>

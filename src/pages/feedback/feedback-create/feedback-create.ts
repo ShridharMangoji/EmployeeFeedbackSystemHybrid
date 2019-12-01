@@ -38,14 +38,17 @@ export class FeedbackCreatePage {
     let reqObj = new RequestModelComponent();
     reqObj.device_id = "abc";
     reqObj.os_type = "Android";
+    debugger;
     reqObj.user_id = this.user_id;
 
-
+debugger;
      let respObj= await this.feedbackServiceCall.teamList(reqObj);
+     debugger;
      let fcRespObj= await this.feedbackServiceCall.feedbackCategoryList(reqObj);
     if (respObj.status_code == 200) {
      this.teamUserList=respObj.userList;
      this.feedbackCategoryList=fcRespObj.feedback_categories;
+     debugger;
       console.log("teamList is fetch "+this.teamUserList[0].name);
     }
     else
@@ -63,14 +66,16 @@ async submitGivenFeedback()
     reqObj.user_id = this.user_id;
     reqObj.feedback_info=new feedbackInfo();
     reqObj.feedback_info.Message=this.message;
-    reqObj.feedback_info.Subject=this.subject;
+     reqObj.feedback_info.Subject="Test Subject";
     reqObj.feedback_info.CreatedFor=this.selectedTeamMember.id;
     reqObj.feedback_info.FeedbackCategoryId=this.selectedFeedbackCategory.id;
     reqObj.feedback_info.CreatedBy=this.user_id;
-    
+    reqObj.feedback_id=0;
+    reqObj.feedback_info.Id=0;
+    reqObj.feedback_info.StatusId=1;
     let respObj= await this.feedbackServiceCall.giveFeedback(reqObj);
     if (respObj.status_code == 200) {
-     this.navCtrl.push('FeedbackListPage');
+     this.navCtrl.push('LandingPage');
     }
     else
     {
@@ -81,8 +86,8 @@ async submitGivenFeedback()
  async submitFeedback() {
    
     const confirm = this.alertCtrl.create({
-      title: 'Use this lightsaber?',
-      message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
+      title: 'Please confirm?',
+      message: 'Are you sure, You want to submit the feedback?',
       buttons: [
         {
           text: 'Disagree',
