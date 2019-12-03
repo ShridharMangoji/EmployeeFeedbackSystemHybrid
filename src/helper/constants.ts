@@ -1,3 +1,4 @@
+
 export const constants = {
     production: true,
     BaseURL: "http://localhost:51731/api/",//"http://localhost/Cool/api/",
@@ -9,5 +10,6 @@ export const constants = {
     EscalatedUserList:"User/EscalatedUserList",
     FeedbackList:"Feedback/FeedbackList",
     FeedbackHistory:"Feedback/FeedbackHistory",
-    FeedbackDetailList:"Feedback/FeedbackDetailList"
+    FeedbackDetailList:"Feedback/FeedbackDetailList",
+    ReplyToFeedback:"Feedback/ReplyToFeedback"
   };

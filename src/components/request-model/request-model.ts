@@ -22,6 +22,9 @@ export class VerifyOTPReq extends RequestModelComponent {
 export class giveFeedback extends RequestModelComponent {
   feedback_info:feedbackInfo;
 }
+export class replyReq extends RequestModelComponent {
+  reply:String;
+}
 
 export class FeedbackListReq extends RequestModelComponent {
   escalated_user_id:Number;
@@ -47,7 +50,7 @@ export class feedback{
   feedbackCategoryId:Number;
   createdForName:String;
   feedbackCategoryName:String;
-  
+  strCreatedOn:string;
   // createdForNavigation:KeyValuePair;
   // feedbackCategory:KeyValuePair;
 }

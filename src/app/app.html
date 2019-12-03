@@ -1,18 +1,19 @@
-<ion-menu [content]="content"  persistent="true">
+<ion-menu [content]="content" persistent="true">
     <ion-header>
         <ion-toolbar>
             <ion-title>Welcome {{userName}}</ion-title>
         </ion-toolbar>
-        
+
     </ion-header>
     <ion-content>
         <ion-list>
-            <button ion-item (click)="openPage('List')">
-                Feedback List
-            </button>
             <button ion-item (click)="openPage('Addfeedback')">
                 Give Feedback
             </button>
+            <button ion-item (click)="openPage('List')">
+                Feedback List
+            </button>
+
             <button ion-item (click)="openPage('LogOut')">
                 Log Out
             </button>

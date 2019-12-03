@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { KeyValuePair } from './../../../components/response-model/response-model';
+import { KeyValuePair ,FeedbackReplyModel} from './../../../components/response-model/response-model';
 import { FeedbackServiceProvider } from './../../../providers/feedback-service/feedback-service';
-import { RequestModelComponent, giveFeedback, feedbackInfo, FeedbackEscalationMapping } from './../../../components/request-model/request-model';
+import { replyReq,RequestModelComponent, giveFeedback, feedbackInfo, FeedbackEscalationMapping } from './../../../components/request-model/request-model';
 
 /**
  * Generated class for the FeedbackHistoryPage page.
@@ -31,14 +31,19 @@ export class FeedbackHistoryPage {
   public oldMessage: String;
   public oldCategory: String;
   public oldCreatedFor: String;
+  public created_on:String;
+  public ReplyMessage: String;
   public subject: String;
   public message: String;
   public selectedTeamMember: Number;
   public selectedFeedbackCategory: KeyValuePair;
   public feedbackEscalatedMessages: FeedbackEscalationMapping[];
-  public is_escalated_messages = false;
+  public show_escalation_history = false;
   public is_escalation_required = false;
   public escalateReq = false;
+  public is_reply_button_required = false;
+  public show_reply_history=false;
+  public chat_history:FeedbackReplyModel[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public feedbackServiceCall: FeedbackServiceProvider) {
@@ -63,16 +68,25 @@ export class FeedbackHistoryPage {
 
     let fcRespObj = await this.feedbackServiceCall.FeedbackHistory(reqObj);
     if (fcRespObj.feedbackEscalationHistory!=null||fcRespObj.feedbackEscalationHistory.length > 0) {
-      this.is_escalated_messages = true;
+      this.show_escalation_history = true;
       this.feedbackEscalatedMessages = fcRespObj.feedbackEscalationHistory;
     }
-    if (fcRespObj.isEscalationAllowed == true) {
+    if (fcRespObj.isEscalationAllowed) {
       this.is_escalation_required = true;
+    }
+    if(fcRespObj.isReplyRequired)
+    { this.is_reply_button_required=true;
+    }
+    if(fcRespObj.isChatHistoryAccessible)
+    {
+      this.chat_history=fcRespObj.replyList;
+      this.show_reply_history=true;
     }
 
     this.oldSubject = fcRespObj.feedbackDetails.subject;
     this.oldMessage = fcRespObj.feedbackDetails.message;
     this.oldCategory= fcRespObj.feedbackDetails.feedbackCategoryName;
+    this.created_on=fcRespObj.feedbackDetails.strCreatedOn;
     if(this.user_id!=fcRespObj.feedbackDetails.createdFor){
     this.oldCreatedFor="To :"+ fcRespObj.feedbackDetails.createdForName;}
     let respObj = await this.feedbackServiceCall.teamList(reqObj);
@@ -129,6 +143,20 @@ export class FeedbackHistoryPage {
     reqObj.feedback_info.StatusId = 3;
     console.log(this.selected_feedback_id);
     let respObj = await this.feedbackServiceCall.giveFeedback(reqObj);
+    if (respObj.status_code = 200) {
+      this.navCtrl.push('LandingPage')
+    }
+  }
+
+  async Reply() {
+    let reqObj = new replyReq();
+    reqObj.device_id = "abc";
+    reqObj.os_type = "Android";
+    reqObj.user_id = this.user_id;
+    reqObj.feedback_id = this.selected_feedback_id;
+    reqObj.reply=this.ReplyMessage;
+    console.log(this.selected_feedback_id);
+    let respObj = await this.feedbackServiceCall.Reply(reqObj);
     if (respObj.status_code = 200) {
       this.navCtrl.push('LandingPage')
     }

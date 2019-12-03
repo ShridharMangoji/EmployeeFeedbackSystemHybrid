@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { constants } from './../../helper/constants';
-import { RequestModelComponent ,giveFeedback} from './../../components/request-model/request-model';
+import {replyReq, RequestModelComponent ,giveFeedback} from './../../components/request-model/request-model';
 import {ResponseModelComponent,TeamListResponse,feedbackCategoryResponse,FeedbackHistoryResp,FeedbackDetailListResp} from './../../components/response-model/response-model';
 
 
@@ -90,6 +90,18 @@ public  FeedbackDetailListv2 (body: RequestModelComponent) :Promise<FeedbackDeta
   async giveFeedback (body: giveFeedback) :Promise<ResponseModelComponent>{
     
     let requestURL = constants.BaseURL + constants.UpdateFeedback;
+    let requestBody = JSON.stringify(body);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    const resp= await this.http.post<ResponseModelComponent>(requestURL, requestBody, options).toPromise();
+    return resp;
+  }
+
+  async Reply (body: replyReq) :Promise<ResponseModelComponent>{
+    
+    let requestURL = constants.BaseURL + constants.ReplyToFeedback;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'

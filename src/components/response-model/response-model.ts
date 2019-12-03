@@ -30,6 +30,9 @@ export class ResponseModelComponent {
   }
 
   export class FeedbackHistoryResp extends ResponseModelComponent{
+    isReplyRequired:boolean;
+    isChatHistoryAccessible:boolean;
+    replyList:FeedbackReplyModel[];
     isEscalationAllowed:boolean;
     feedbackDetails:feedback;
     feedbackEscalationHistory: FeedbackEscalationMapping[];
@@ -37,6 +40,11 @@ export class ResponseModelComponent {
   export class KeyValuePair{
     id:Number;
     name:string;
+  }
+
+  export class FeedbackReplyModel{
+    reply_message:string;
+    replied_user_id:Number;
   }
   
   export class FeedbackListResponse extends ResponseModelComponent{
