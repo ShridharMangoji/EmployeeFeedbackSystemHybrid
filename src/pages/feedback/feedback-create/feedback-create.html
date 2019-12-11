@@ -35,7 +35,7 @@
       <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message"></ion-textarea>
     </ion-item>
     <ion-item>
-      <button ion-button (click)='submitFeedback()'>Submit</button>
+      <button [disabled]="disableSubmit" ion-button (click)='submitFeedback()'>Submit</button>
     </ion-item>
   </ion-list>
 </ion-content>

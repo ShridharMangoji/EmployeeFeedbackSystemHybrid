@@ -1,6 +1,6 @@
 import { feedbackInfo ,FeedbackEscalationMapping,feedback} from './../../components/request-model/request-model';
 export class ResponseModelComponent {
-    status_message: String;
+    status_message: string;
     status_code: Number;
     token:string;
   }

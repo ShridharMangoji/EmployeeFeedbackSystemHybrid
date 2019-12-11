@@ -19,14 +19,14 @@
         {{oldMessage}}
       </ion-card-title>
       <p>
-          Category : {{oldCategory}}
+        Category : {{oldCategory}}
       </p>
       <p>
-      {{oldCreatedFor}}
+        {{oldCreatedFor}}
       </p>
       <p>
-       Raised on: {{created_on}}
-          </p>
+        Raised on: {{created_on}}
+      </p>
     </ion-card-content>
   </ion-card>
 
@@ -40,17 +40,16 @@
   </div>
 
   <div *ngIf="is_reply_button_required">
-       <ion-item>
+    <ion-item>
       <ion-textarea placeholder="Please enter message here..." [(ngModel)]="ReplyMessage">{{message}}</ion-textarea>
     </ion-item>
-    <ion-item>
-      <button ion-button (click)='Reply()'>Reply</button>
-    </ion-item>
+    <button center ion-button (click)='Reply()'>Reply</button>
+
   </div>
 
 
   <div *ngIf="show_escalation_history">
-    <ion-label  *ngIf="show_escalation_history">Escalation History</ion-label>
+    <ion-label>Escalation History</ion-label>
     <ion-list inset *ngFor="let item of feedbackEscalatedMessages">
       <ion-item>
         <ion-label stacked>{{item.message}}</ion-label>
@@ -61,11 +60,13 @@
 
 
   <div text-center="" *ngIf="is_escalation_required">
-      <!-- <div text-center=""> -->
+    <!-- <div text-center=""> -->
     <ion-label>Is issue resolved</ion-label>
-    <button ion-button (click)="UpdatedStatus(3)">Yes</button><!--ENum =>Closed_yes-->
-    <button ion-button (click)="UpdatedStatus(4)">No</button><!--ENum =>Closed_no-->
-    <button ion-button (click)="escalateFeedBack()">Escalate</button>
+    <button [disabled]="disableYes" ion-button (click)="UpdatedStatus(3)">Yes</button>
+    <!--ENum =>Closed_yes-->
+    <button [disabled]="disableNo" ion-button (click)="UpdatedStatus(4)">No</button>
+    <!--ENum =>Closed_no-->
+    <button [disabled]="disableEscalate" ion-button (click)="escalateFeedBack()">Escalate</button>
   </div>
 
   <ion-list *ngIf="escalateReq">
@@ -88,7 +89,7 @@
       <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message">{{message}}</ion-textarea>
     </ion-item>
     <ion-item>
-      <button ion-button (click)='escalate()'>Escalate</button>
+      <button [disabled]="disableEscalateSubmit" ion-button (click)='escalate()'>Escalate</button>
     </ion-item>
   </ion-list>
 </ion-content>

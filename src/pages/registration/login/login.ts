@@ -4,7 +4,7 @@ import { RequestModelComponent, VerifyOTPReq } from './../../../components/reque
 import { AuthenticationServiceProvider } from './../../../providers/authentication-service/authentication-service';
 import { Events } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import {Util} from './../../../helper/util';
+import { Util } from './../../../helper/util';
 
 /**
  * Generated class for the LoginPage page.
@@ -21,6 +21,9 @@ import {Util} from './../../../helper/util';
 export class LoginPage {
 
   public otp_entered = false;
+  otpDisable = false;
+  verifyOtpDisable = false;
+  public userID:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public AuthServiceCall: AuthenticationServiceProvider, public events: Events, public alertCtrl: AlertController
@@ -35,11 +38,15 @@ export class LoginPage {
 
   }
 
-  
+  UpdateUserID(){
+    this.otpDisable=false;
+  }
 
   async GenerateOTP(strUser_id: Number) {
     console.log(strUser_id)
+    console.log("Check=>"+this.userID)
     if (strUser_id > 0) {
+      this.otpDisable = true;
       var user_id = +strUser_id;
       let reqObj = new RequestModelComponent();
       reqObj.device_id = "abc";
@@ -51,29 +58,37 @@ export class LoginPage {
       }
     }
     else {
-      var alert=new Util(this.alertCtrl);
+      var alert = new Util(this.alertCtrl);
       alert.showAlert("Login", "Please enter valid User ID");
     }
   }
 
   async varifyOtp(strOTP: string, strUser_id: Number) {
     var user_id = +strUser_id;
-    let reqObj = new VerifyOTPReq();
-    reqObj.device_id = "abc";
-    reqObj.os_type = "Android";
-    reqObj.otp = strOTP;
-    reqObj.user_id = user_id;
-    let respObj = await this.AuthServiceCall.verifyOTP(reqObj);
-    if (respObj.status_code == 200) {
-      localStorage.setItem("user_id", String(user_id));
-      localStorage.setItem("token", respObj.token);
-      localStorage.setItem("user_name", respObj.name);
-      console.log(respObj.name);
-      this.events.publish('UserName', respObj.name, Date.now());
-      this.navCtrl.push('LandingPage');
-    }
-    else {
 
+    if (strOTP.length > 0) {
+      this.verifyOtpDisable = true;
+      let reqObj = new VerifyOTPReq();
+      reqObj.device_id = "abc";
+      reqObj.os_type = "Android";
+      reqObj.otp = strOTP;
+      reqObj.user_id = user_id;
+      let respObj = await this.AuthServiceCall.verifyOTP(reqObj);
+      if (respObj.status_code == 200) {
+        localStorage.setItem("user_id", String(user_id));
+        localStorage.setItem("token", respObj.token);
+        localStorage.setItem("user_name", respObj.name);
+        console.log(respObj.name);
+        this.events.publish('UserName', respObj.name, Date.now());
+        this.navCtrl.push('LandingPage');
+      }
+      else {
+        let alert = new Util(this.alertCtrl);
+        alert.showAlert("Login", respObj.status_message);
+      }
+    } else {
+      let alert = new Util(this.alertCtrl);
+      alert.showAlert("Login", "Please enter OTP");
     }
 
   }

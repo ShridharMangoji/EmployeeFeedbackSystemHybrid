@@ -7,56 +7,68 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <button ion-button menuToggle icon-only start>
-      <ion-icon name='menu'></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title text-center>Feedback-list</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content >
-    <ion-toolbar no-border-top>
-        <ion-segment [(ngModel)]="pet">
-          <ion-segment-button value="myFeedbacks">
-            Feedback's given
-          </ion-segment-button>
-          <ion-segment-button value="feedbacksForMe">
-            Feedback's received
-          </ion-segment-button>
-          
-          <ion-segment-button value="escalatedFeedback" [hidden]="!isEscalationRequired">
-            
-            Escalated Feedbacks
-            
-          </ion-segment-button>
-        
-        </ion-segment>
-      </ion-toolbar>
-    
-      <div [ngSwitch]="pet">
-          <ion-list *ngSwitchCase="'myFeedbacks'">
-            <button ion-item  *ngFor="let index of feedbackByMe" (click)="feedbackSelected(index.id)">
-                <h2>{{ index.message }}</h2>
-                <p> TO :{{index.createdForName}}</p>
-                <p> Category :{{index.feedbackCategoryName}}</p>
-            </button>  
-          </ion-list>
-    
-        <ion-list *ngSwitchCase="'feedbacksForMe'">
-          <button ion-item  *ngFor="let index of feedbackForMe" (click)="feedbackSelected(index.id)">
-              <h2>{{ index.message }}</h2>
-                <p> Category :{{index.feedbackCategoryName}}</p>
-          </button> 
-        </ion-list>
-    
-        <ion-list *ngSwitchCase="'escalatedFeedback'">
-          <button ion-item  *ngFor="let index of feedbackEscalated" (click)="feedbackSelected(index.id)">
-              <h2>{{ index.message }}</h2>
-              <p> TO :{{index.createdForName}}</p>
-              <p> Category :{{index.feedbackCategoryName}}</p>
-          </button> 
-        </ion-list>
-      </div>
-   
+<ion-content>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="pet">
+      <ion-segment-button value="myFeedbacks">
+        Feedback's given
+      </ion-segment-button>
+      <ion-segment-button value="feedbacksForMe">
+        Feedback's received
+      </ion-segment-button>
+
+      <ion-segment-button
+        value="escalatedFeedback"
+        [hidden]="!isEscalationRequired"
+      >
+        Escalated Feedbacks
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div [ngSwitch]="pet">
+    <ion-list *ngSwitchCase="'myFeedbacks'">
+      <button
+        ion-item
+        *ngFor="let index of feedbackByMe"
+        (click)="feedbackSelected(index.id)"
+      >
+        <h2>{{ index.message }}</h2>
+        <p>TO :{{index.createdForName}}</p>
+        <p>Category :{{index.feedbackCategoryName}}</p>
+      </button>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'feedbacksForMe'">
+      <button
+        ion-item
+        *ngFor="let index of feedbackForMe"
+        (click)="feedbackSelected(index.id)"
+      >
+        <h2>{{ index.message }}</h2>
+        <p>Category :{{index.feedbackCategoryName}}</p>
+      </button>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'escalatedFeedback'">
+      <button
+        ion-item
+        *ngFor="let index of feedbackEscalated"
+        (click)="feedbackSelected(index.id)"
+      >
+        <h2>{{ index.message }}</h2>
+        <p>TO :{{index.createdForName}}</p>
+        <p>Category :{{index.feedbackCategoryName}}</p>
+      </button>
+    </ion-list>
+  </div>
+
   <!-- <ion-list>
     <button ion-item *ngFor="let feedback of feedbackList" (click)="feedbackSelected(feedback)">
       {{ feedback }}

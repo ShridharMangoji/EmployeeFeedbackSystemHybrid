@@ -16,16 +16,16 @@
     <ion-card-content>
       <ion-item>
         <ion-label floating>User ID</ion-label>
-        <ion-input #user_id type="text"></ion-input>
+        <ion-input #user_id type="text" [(ngModel)]="userID" (ionChange)="UpdateUserID()"></ion-input>
       </ion-item>
-      <button class="otp-btn" ion-button color="secondary" round (click)="GenerateOTP(user_id.value)">Send otp</button>
+      <button [disabled]="otpDisable" class="otp-btn" ion-button color="secondary" round (click)="GenerateOTP(user_id.value)">Send otp</button>
       <div *ngIf="otp_entered">
         <ion-item>
           <ion-label floating>OTP</ion-label>
           <ion-input #otp type="password"></ion-input>
         </ion-item>
 
-        <button class="otp-btn" ion-button color="secondary" round (click)="varifyOtp(otp.value,user_id.value)">Verify
+        <button  [disabled]="verifyOtpDisable"  class="otp-btn" ion-button color="secondary" round (click)="varifyOtp(otp.value,user_id.value)">Verify
           otp</button>
       </div>
 

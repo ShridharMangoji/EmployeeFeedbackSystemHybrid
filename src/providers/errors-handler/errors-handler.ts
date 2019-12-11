@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
 /*
   Generated class for the ErrorsHandlerProvider provider.
@@ -9,9 +9,7 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class ErrorsHandlerProvider {
-
   constructor(public http: HttpClient) {
-    console.log('Hello ErrorsHandlerProvider Provider');
+    console.log("Hello ErrorsHandlerProvider Provider");
   }
-
 }
