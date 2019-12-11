@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import { RequestModelComponent } from './../../components/request-model/request-model';
 import { AuthenticationServiceProvider } from './../../providers/authentication-service/authentication-service';
 import { FeedbackServiceProvider } from './../../providers/feedback-service/feedback-service';
@@ -23,11 +24,8 @@ export class LandingPage {
   get user_id() {
     return Number(localStorage.getItem("user_id"));
   }
-  default(){
-    localStorage.setItem("SectionToBeSelected", "myFeedbacks");
-  }
   public escalated = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
     public authCall: AuthenticationServiceProvider,public feedbackServiceCall : FeedbackServiceProvider) {
 
 
@@ -42,8 +40,10 @@ export class LandingPage {
     if (respObj.status_code == 200) {
       console.log(respObj.feedbackEscalatedToMe.length )
       if (respObj.feedbackEscalatedToMe.length > 0) {
+        this.events.publish('isEscalationRequired', true, Date.now());
         this.escalated = true;
       } else {
+        this.events.publish('isEscalationRequired', false, Date.now());
         this.escalated = false;
       }
     }
@@ -51,7 +51,6 @@ export class LandingPage {
   }
 
   async ionViewDidLoad() {
-   this.default();
     console.log('ionViewDidLoad LandingPage');
     this.escalatedUserList();
   }
@@ -60,7 +59,8 @@ export class LandingPage {
   }
 
   escalatedFeedbackList(){
-    localStorage.setItem("SectionToBeSelected", "escalatedFeedback");
-    this.navCtrl.push('FeedbackListPage');
+   let params={tabIndex:"escalatedFeedback"};
+   // localStorage.setItem("SectionToBeSelected", "escalatedFeedback");
+    this.navCtrl.push('FeedbackListPage',params);
   }
 }

@@ -32,12 +32,7 @@ export class FeedbackCreatePage {
     this.menuCtrl.enable(true)
   }
 
-  default(){
-    localStorage.setItem("SectionToBeSelected",  "myFeedbacks");
-  }
-
  async ionViewDidLoad() {
-   this.default();
     console.log('ionViewDidLoad FeedbackCreatePage12121');
     
     let reqObj = new RequestModelComponent();

@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RequestModelComponent, feedback, feedbackInfo, FeedbackEscalationMapping } from './../../../components/request-model/request-model';
 import { FeedbackServiceProvider } from './../../../providers/feedback-service/feedback-service';
 import { FeedbackDetailListResp } from './../../../components/response-model/response-model';
+import { Events } from 'ionic-angular';
+import {PassingParameter} from './../../../helper/util';
 /**
  * Generated class for the FeedbackListPage page.
  *
@@ -25,9 +27,11 @@ export class FeedbackListPage {
     
     return  String(localStorage.getItem("SectionToBeSelected"));
   }
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  public navParams1: NavParams;
+  constructor(public events: Events,public navCtrl: NavController, public navParams: NavParams,
     public feedbackServiceCall: FeedbackServiceProvider) {
+      console.log("Tab Name => "+navParams.data.tabIndex);
+      this.pet =navParams.data.tabIndex;
   }
 
   feedbackByMe: feedback[];
@@ -36,12 +40,13 @@ export class FeedbackListPage {
   isEscalationRequired = false;
 
   async ionViewDidLoad() {
-    this.pet=this.SelectedSection==null?"myFeedbacks":this.SelectedSection;
-    console.log(this.pet);
-    if(this.pet===null)
-    {
-      this.pet="myFeedbacks";
-    }
+  
+    // this.events.subscribe('SectionToBeSelected', (eventEsclationReq) => {
+    //   // user and time are the same arguments passed in `events.publish(user, time)`
+    //   this.pet = eventEsclationReq;
+      
+    // });
+
     console.log('ionViewDidLoad FeedbackListPage');
     let reqObj = new RequestModelComponent();
     reqObj.device_id = "abc";

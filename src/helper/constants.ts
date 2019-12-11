@@ -13,3 +13,10 @@ export const constants = {
     FeedbackDetailList:"Feedback/FeedbackDetailList",
     ReplyToFeedback:"Feedback/ReplyToFeedback"
   };
+
+  export enum eFeedbackStatus{
+    Created=1,
+    Escalated=2,
+    Closed_yes=3,
+    Closed_no
+  }

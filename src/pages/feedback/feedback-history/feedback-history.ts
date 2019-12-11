@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { KeyValuePair ,FeedbackReplyModel} from './../../../components/response-model/response-model';
 import { FeedbackServiceProvider } from './../../../providers/feedback-service/feedback-service';
 import { replyReq,RequestModelComponent, giveFeedback, feedbackInfo, FeedbackEscalationMapping } from './../../../components/request-model/request-model';
-
+import {eFeedbackStatus} from './../../../helper/constants';
 /**
  * Generated class for the FeedbackHistoryPage page.
  *
@@ -24,7 +24,7 @@ export class FeedbackHistoryPage {
   get selected_feedback_id() {
     return Number(localStorage.getItem("selected_feedback_id"));
   }
-
+  public feedbackStatusEnum = eFeedbackStatus;
   public teamUserList: KeyValuePair[];
   public feedbackCategoryList: KeyValuePair[];
   public oldSubject: String;
@@ -53,12 +53,8 @@ export class FeedbackHistoryPage {
   {
     this.escalateReq=true;
   }
-  default(){
-    localStorage.setItem("SectionToBeSelected",  "myFeedbacks");
-  }
 
   async ionViewDidLoad() {
-    this.default();
     console.log('ionViewDidLoad FeedbackHistoryPage');
     let reqObj = new RequestModelComponent();
     reqObj.device_id = "abc";
@@ -101,7 +97,6 @@ export class FeedbackHistoryPage {
   }
 
   async escalateFeedback() {
-
     let reqObj = new giveFeedback();
     reqObj.device_id = "abc";
     reqObj.os_type = "Android";
@@ -127,20 +122,16 @@ export class FeedbackHistoryPage {
     this.showConfirm();
   }
 
-  async CloseLead() {
+  async UpdatedStatus(status:Number) {
+    console.log(status);
     let reqObj = new giveFeedback();
     reqObj.device_id = "abc";
     reqObj.os_type = "Android";
     reqObj.user_id = this.user_id;
     reqObj.feedback_info = new feedbackInfo();
-    // reqObj.feedback_info.Message=this.message;
-    // reqObj.feedback_info.Subject=this.subject;
-    //reqObj.feedback_info.CreatedFor = this.selectedTeamMember.id;
-    // reqObj.feedback_info.FeedbackCategoryId = this.selectedFeedbackCategory.id;
-    // reqObj.feedback_info.CreatedBy = this.user_id;
     reqObj.feedback_id = this.selected_feedback_id;
     reqObj.feedback_info.Id = this.selected_feedback_id;
-    reqObj.feedback_info.StatusId = 3;
+    reqObj.feedback_info.StatusId = status;
     console.log(this.selected_feedback_id);
     let respObj = await this.feedbackServiceCall.giveFeedback(reqObj);
     if (respObj.status_code = 200) {

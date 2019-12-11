@@ -61,9 +61,11 @@
 
 
   <div text-center="" *ngIf="is_escalation_required">
+      <!-- <div text-center=""> -->
     <ion-label>Is issue resolved</ion-label>
-    <button ion-button (click)="CloseLead()">Yes</button>
-    <button ion-button (click)="escalateFeedBack()">No</button>
+    <button ion-button (click)="UpdatedStatus(3)">Yes</button><!--ENum =>Closed_yes-->
+    <button ion-button (click)="UpdatedStatus(4)">No</button><!--ENum =>Closed_no-->
+    <button ion-button (click)="escalateFeedBack()">Escalate</button>
   </div>
 
   <ion-list *ngIf="escalateReq">

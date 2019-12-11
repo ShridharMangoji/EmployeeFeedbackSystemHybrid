@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 import { FeedbackServiceProvider } from '../providers/feedback-service/feedback-service';
+import { ErrorsHandlerProvider } from '../providers/errors-handler/errors-handler';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FeedbackServiceProvider } from '../providers/feedback-service/feedback-
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthenticationServiceProvider,
-    FeedbackServiceProvider
+    FeedbackServiceProvider,
+    ErrorsHandlerProvider
   ]
 })
 export class AppModule {}
