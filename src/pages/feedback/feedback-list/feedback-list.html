@@ -56,7 +56,7 @@
       </button>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'escalatedFeedback'">
+    <!-- <ion-list *ngSwitchCase="'escalatedFeedback'">
       <button
         ion-item
         *ngFor="let index of feedbackEscalated"
@@ -65,6 +65,15 @@
         <h2>{{ index.message }}</h2>
         <p>TO :{{index.createdForName}}</p>
         <p>Category :{{index.feedbackCategoryName}}</p>
+      </button>
+    </ion-list> -->
+    <ion-list *ngSwitchCase="'escalatedFeedback'">
+      <button
+        ion-item
+        *ngFor="let index of escalatedUsers"
+        (click)="itemSelected(index.id)"
+      >
+        <h2>{{ index.name }}</h2>
       </button>
     </ion-list>
   </div>
