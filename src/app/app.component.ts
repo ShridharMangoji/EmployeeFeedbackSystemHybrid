@@ -22,19 +22,13 @@ export class MyApp {
 
   constructor(public events: Events, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
     events.subscribe('UserName', (user, time) => {
-
-      // user and time are the same arguments passed in `events.publish(user, time)`
       this.userName = user;
     });
     events.subscribe('isEscalationRequired', (eventEsclationReq, time) => {
-
       console.log("Check=>" + eventEsclationReq);
-      // user and time are the same arguments passed in `events.publish(user, time)`
       this.isEscalationRequired = eventEsclationReq;
     });
     platform.ready().then(() => {
-
-
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();

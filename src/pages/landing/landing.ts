@@ -26,7 +26,7 @@ export class LandingPage {
   }
   public escalated = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
-    public authCall: AuthenticationServiceProvider,public feedbackServiceCall : FeedbackServiceProvider) {
+    public authCall: AuthenticationServiceProvider, public feedbackServiceCall: FeedbackServiceProvider) {
 
 
   }
@@ -38,11 +38,14 @@ export class LandingPage {
     reqObj.user_id = this.user_id;
     let respObj = await this.feedbackServiceCall.FeedbackDetailList(reqObj);
     if (respObj.status_code == 200) {
-      console.log(respObj.feedbackEscalatedToMe.length )
+      console.log(respObj.feedbackEscalatedToMe.length)
       if (respObj.feedbackEscalatedToMe.length > 0) {
+        console.log("Landing" + true);
         this.events.publish('isEscalationRequired', true, Date.now());
         this.escalated = true;
-      } else {
+      }
+      else {
+        console.log("Landing" + false);
         this.events.publish('isEscalationRequired', false, Date.now());
         this.escalated = false;
       }
@@ -58,9 +61,9 @@ export class LandingPage {
     this.navCtrl.push('FeedbackCreatePage');
   }
 
-  escalatedFeedbackList(){
-   let params={tabIndex:"escalatedFeedback"};
-   // localStorage.setItem("SectionToBeSelected", "escalatedFeedback");
-    this.navCtrl.push('FeedbackListPage',params);
+  escalatedFeedbackList() {
+    let params = { tabIndex: "escalatedFeedback" };
+    // localStorage.setItem("SectionToBeSelected", "escalatedFeedback");
+    this.navCtrl.push('FeedbackListPage', params);
   }
 }

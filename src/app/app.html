@@ -15,7 +15,7 @@
                 <ion-item-group submenu [class.visible]="showSubmenu">
                     <ion-item submenu-item (click)="openPage('MyFeedback')">Feedback's given</ion-item>
                     <ion-item submenu-item (click)="openPage('FeedbackForMe')">Feedback's received </ion-item>
-                    <ion-item submenu-item (click)="openPage('EscalationFeedback')" *ngIf="is_escalation_required">Escalated Feedbacks </ion-item>
+                    <ion-item submenu-item (click)="openPage('EscalationFeedback')"  *ngIf="isEscalationRequired">Escalated Feedbacks </ion-item>
                 </ion-item-group>
                 <button ion-item (click)="openPage('LogOut')">
                     Log Out

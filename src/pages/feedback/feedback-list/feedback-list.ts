@@ -30,6 +30,8 @@ export class FeedbackListPage {
   public navParams1: NavParams;
   constructor(public events: Events,public navCtrl: NavController, public navParams: NavParams,
     public feedbackServiceCall: FeedbackServiceProvider) {
+      
+      console.log("Tab Name => "+JSON.stringify(navParams.data));
       console.log("Tab Name => "+navParams.data.tabIndex);
       this.pet =navParams.data.tabIndex;
   }
