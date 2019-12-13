@@ -2,17 +2,12 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import {
   RequestModelComponent,
-  feedback,
-  feedbackInfo,
-  FeedbackEscalationMapping
-} from "./../../../components/request-model/request-model";
+  feedback} from "./../../../components/request-model/request-model";
 import { FeedbackServiceProvider } from "./../../../providers/feedback-service/feedback-service";
 import {
-  FeedbackDetailListResp,
   KeyValuePair
 } from "./../../../components/response-model/response-model";
 import { Events } from "ionic-angular";
-import { PassingParameter } from "./../../../helper/util";
 import { AuthenticationServiceProvider } from "./../../../providers/authentication-service/authentication-service";
 
 /**

@@ -1,9 +1,8 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform, NavController, MenuController,Nav } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, NavController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events } from 'ionic-angular';
-import {PassingParameter} from './../helper/util';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,10 +20,10 @@ export class MyApp {
 
 
   constructor(public events: Events, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
-    events.subscribe('UserName', (user, time) => {
+    events.subscribe('UserName', (user) => {
       this.userName = user;
     });
-    events.subscribe('isEscalationRequired', (eventEsclationReq, time) => {
+    events.subscribe('isEscalationRequired', (eventEsclationReq) => {
       console.log("Check=>" + eventEsclationReq);
       this.isEscalationRequired = eventEsclationReq;
     });

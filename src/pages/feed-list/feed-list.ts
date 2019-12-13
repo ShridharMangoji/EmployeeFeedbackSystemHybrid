@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { RequestModelComponent, FeedbackListReq, feedbackInfo } from './../../components/request-model/request-model';
+import { FeedbackListReq, feedbackInfo } from './../../components/request-model/request-model';
 import { AuthenticationServiceProvider } from './../../providers/authentication-service/authentication-service';
 
 /**

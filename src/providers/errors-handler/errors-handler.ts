@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AlertController } from 'ionic-angular';
 import { Util } from './../../helper/util';

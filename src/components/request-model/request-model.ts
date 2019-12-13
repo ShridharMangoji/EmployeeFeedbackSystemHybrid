@@ -1,4 +1,3 @@
-import { KeyValuePair } from "../response-model/response-model";
 
 /**
  * Generated class for the RequestModelComponent component.
