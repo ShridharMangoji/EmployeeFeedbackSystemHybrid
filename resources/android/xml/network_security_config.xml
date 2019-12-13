@@ -3,4 +3,4 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain>13.232.165.121</domain>
     </domain-config>
-</network-security-config>
+</network-security-config> 
