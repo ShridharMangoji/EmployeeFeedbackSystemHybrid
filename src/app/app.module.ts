@@ -30,7 +30,7 @@ import { ErrorsHandlerProvider } from '../providers/errors-handler/errors-handle
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthenticationServiceProvider,
     FeedbackServiceProvider,
-    ErrorsHandlerProvider
+    //ErrorsHandlerProvider
   ]
 })
 export class AppModule {}

@@ -1,98 +1,168 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { constants } from './../../helper/constants';
-import { RequestModelComponent, VerifyOTPReq } from './../../components/request-model/request-model';
-import { ResponseModelComponent, EscalatedUserListResp, VerifyOTPResp, FeedbackListResponse } from './../../components/response-model/response-model';
-import { AlertController } from 'ionic-angular';
-import {Util} from './../../helper/util';
-import {App} from 'ionic-angular'
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { constants } from "./../../helper/constants";
+import {
+  RequestModelComponent,
+  VerifyOTPReq
+} from "./../../components/request-model/request-model";
+import {
+  ResponseModelComponent,
+  EscalatedUserListResp,
+  VerifyOTPResp,
+  FeedbackListResponse
+} from "./../../components/response-model/response-model";
+import { AlertController } from "ionic-angular";
+import { Util } from "./../../helper/util";
+import { App } from "ionic-angular";
+import { ErrorsStatusHandler } from "./../errors-handler/errors-handler";
 /*
   Generated class for the AuthenticationServiceProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-@Injectable(
-)
+@Injectable()
 export class AuthenticationServiceProvider {
-
   //public http:HttpClient;
-  constructor(public app: App,public http: HttpClient, public alertCtrl: AlertController) {
-    console.log('Hello AuthenticationServiceProvider Provider');
+  constructor(
+    public app: App,
+    public http: HttpClient,
+    public alertCtrl: AlertController
+  ) {
+    console.log("Hello AuthenticationServiceProvider Provider");
   }
 
-
-  async escalationUserListCall(body: RequestModelComponent): Promise<EscalatedUserListResp> {
+  async escalationUserListCall(
+    body: RequestModelComponent
+  ): Promise<EscalatedUserListResp> {
     let obj = new EscalatedUserListResp();
     let requestURL = constants.BaseURL + constants.EscalatedUserList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     });
     let options = { headers: headers };
-    const resp = await this.http.post<EscalatedUserListResp>(requestURL, requestBody, options).toPromise();
+    const resp = await this.http
+      .post<EscalatedUserListResp>(requestURL, requestBody, options)
+      .toPromise() //;
+      .then(
+        res => {
+          console.log(res);
+          new ErrorsStatusHandler(
+            this.app,
+            this.alertCtrl
+          ).CheckForCommonStatus(res.status_code, res.status_message);
+          return res;
+        },
+        msg => {
+          console.log(msg);
+          var alert = new Util(this.alertCtrl);
+          alert.showAlert("Server Error", "Error communicating to server");
+          //this.RedirectToLoginPage();
+          return msg;
+        }
+      );
     return resp;
-
   }
 
-  async escalationUserFeedbackListCall(body: RequestModelComponent): Promise<FeedbackListResponse> {
+  async escalationUserFeedbackListCall(
+    body: RequestModelComponent
+  ): Promise<FeedbackListResponse> {
     let obj = new EscalatedUserListResp();
     let requestURL = constants.BaseURL + constants.FeedbackList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     });
     let options = { headers: headers };
-    const resp = await this.http.post<FeedbackListResponse>(requestURL, requestBody, options).toPromise();
+    const resp = await this.http
+      .post<FeedbackListResponse>(requestURL, requestBody, options)
+      .toPromise() //;
+      .then(
+        res => {
+          console.log(res);
+          new ErrorsStatusHandler(
+            this.app,
+            this.alertCtrl
+          ).CheckForCommonStatus(res.status_code, res.status_message);
+          return res;
+        },
+        msg => {
+          console.log(msg);
+          var alert = new Util(this.alertCtrl);
+          alert.showAlert("Server Error", "Error communicating to server");
+          //this.RedirectToLoginPage();
+          return msg;
+        }
+      );
     return resp;
-
   }
 
-  RedirectToLoginPage()
-  {
+  RedirectToLoginPage() {
     let nav = this.app.getActiveNav();
     nav.setRoot("LoginPage");
   }
 
-  async generateOTP(body: RequestModelComponent): Promise<ResponseModelComponent> {
+  async generateOTP(
+    body: RequestModelComponent
+  ): Promise<ResponseModelComponent> {
     let requestURL = constants.BaseURL + constants.GenerateOTP;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     });
     let options = { headers: headers };
     // return await this.http.post<ResponseModelComponent>(requestURL, requestBody, options).toPromise();
     // return await this.GenericPostCall(requestURL, requestBody, options);
-    return await this.http.post<ResponseModelComponent>(requestURL, requestBody, options).toPromise();
-    // .then(
-    //   res => {
-    //     // Success
-    //     console.log(res);
-    //     return res;
-    //   },
-    //   msg => {
-    //     // Error
-    //     console.log(msg);
-    //     var alert=new Util(this.alertCtrl);
-    //     alert.showAlert("Server Error", "Error communicating to server");
-    //     this.RedirectToLoginPage();
-    //     return msg;
-    //   }
-    // );
-  }
-
-  PostCall() {
-
+    return await this.http
+      .post<ResponseModelComponent>(requestURL, requestBody, options)
+      .toPromise() //;
+      .then(
+        res => {
+          console.log(res);
+          new ErrorsStatusHandler(
+            this.app,
+            this.alertCtrl
+          ).CheckForCommonStatus(res.status_code, res.status_message);
+          return res;
+        },
+        msg => {
+          console.log(msg);
+          var alert = new Util(this.alertCtrl);
+          alert.showAlert("Server Error", "Error communicating to server");
+          //this.RedirectToLoginPage();
+          return msg;
+        }
+      );
   }
 
   async verifyOTP(body: VerifyOTPReq): Promise<VerifyOTPResp> {
     let requestURL = constants.BaseURL + constants.VerifyOTP;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     });
     let options = { headers: headers };
-    const resp = await this.http.post<VerifyOTPResp>(requestURL, requestBody, options).toPromise();
+    const resp = await this.http
+      .post<VerifyOTPResp>(requestURL, requestBody, options)
+      .toPromise() //;
+      .then(
+        res => {
+          console.log(res);
+          new ErrorsStatusHandler(
+            this.app,
+            this.alertCtrl
+          ).CheckForCommonStatus(res.status_code, res.status_message);
+          return res;
+        },
+        msg => {
+          console.log(msg);
+          var alert = new Util(this.alertCtrl);
+          alert.showAlert("Server Error", "Error communicating to server");
+          //this.RedirectToLoginPage();
+          return msg;
+        }
+      );
     return resp;
     // const req= this.http.post<ResponseModelComponent>(requestURL, requestBody, options)
     // .subscribe(
@@ -116,6 +186,4 @@ export class AuthenticationServiceProvider {
 
     // return obj;
   }
-
-
 }
