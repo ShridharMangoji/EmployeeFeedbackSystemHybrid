@@ -19,6 +19,8 @@ import {
 } from "./../../../components/request-model/request-model";
 import { eFeedbackStatus } from "./../../../helper/constants";
 import { Util } from "./../../../helper/util";
+
+import { LocalStorageKeys} from './../../../helper/constants';
 /**
  * Generated class for the FeedbackHistoryPage page.
  *
@@ -33,11 +35,11 @@ import { Util } from "./../../../helper/util";
 })
 export class FeedbackHistoryPage {
   get user_id() {
-    return Number(localStorage.getItem("user_id"));
+    return Number(localStorage.getItem(LocalStorageKeys.user_id));
   }
 
   get selected_feedback_id() {
-    return Number(localStorage.getItem("selected_feedback_id"));
+    return Number(localStorage.getItem(LocalStorageKeys.selected_feedback_id));
   }
   public feedbackStatusEnum = eFeedbackStatus;
   public teamUserList: KeyValuePair[];

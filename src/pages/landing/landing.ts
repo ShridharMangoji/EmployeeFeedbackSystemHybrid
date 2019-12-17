@@ -5,6 +5,7 @@ import { RequestModelComponent } from './../../components/request-model/request-
 import { AuthenticationServiceProvider } from './../../providers/authentication-service/authentication-service';
 import { FeedbackServiceProvider } from './../../providers/feedback-service/feedback-service';
 
+import { LocalStorageKeys} from './../../helper/constants';
 
 //import { EscalatedUserListResp,ResponseModelComponent } from './../../components/response-model/response-model';
 
@@ -22,7 +23,7 @@ import { FeedbackServiceProvider } from './../../providers/feedback-service/feed
 })
 export class LandingPage {
   get user_id() {
-    return Number(localStorage.getItem("user_id"));
+    return Number(localStorage.getItem(LocalStorageKeys.user_id));
   }
   public escalated = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
@@ -63,7 +64,6 @@ export class LandingPage {
 
   escalatedFeedbackList() {
     let params = { tabIndex: "escalatedFeedback" };
-    // localStorage.setItem("SectionToBeSelected", "escalatedFeedback");
     this.navCtrl.push('FeedbackListPage', params);
   }
 }

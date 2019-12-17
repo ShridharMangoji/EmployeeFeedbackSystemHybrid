@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FeedbackListReq, feedbackInfo } from './../../components/request-model/request-model';
 import { AuthenticationServiceProvider } from './../../providers/authentication-service/authentication-service';
 
+import { LocalStorageKeys} from './../../helper/constants';
 /**
  * Generated class for the FeedListPage page.
  *
@@ -17,11 +18,8 @@ import { AuthenticationServiceProvider } from './../../providers/authentication-
 })
 export class FeedListPage {
   get user_id() {
-    return Number(localStorage.getItem("user_id"));
+    return Number(localStorage.getItem(LocalStorageKeys.user_id));
   }
-  // get team_user_id() {
-  //   return Number(localStorage.getItem("team_user_id"));
-  // }
   team_user_id:any;
   public feedbackList: feedbackInfo[]
   constructor(public navCtrl: NavController, public navParams: NavParams,

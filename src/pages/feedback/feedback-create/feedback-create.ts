@@ -4,6 +4,8 @@ import { KeyValuePair } from './../../../components/response-model/response-mode
 import { FeedbackServiceProvider } from './../../../providers/feedback-service/feedback-service';
 import { RequestModelComponent, giveFeedback, feedbackInfo } from './../../../components/request-model/request-model';
 import { Util } from './../../../helper/util';
+
+import { LocalStorageKeys} from './../../../helper/constants';
 /**
  * Generated class for the FeedbackCreatePage page.
  *
@@ -18,7 +20,7 @@ import { Util } from './../../../helper/util';
 })
 export class FeedbackCreatePage {
   get user_id() {
-    return Number(localStorage.getItem("user_id"));
+    return Number(localStorage.getItem(LocalStorageKeys.user_id));
   }
 
   public teamUserList: KeyValuePair[];

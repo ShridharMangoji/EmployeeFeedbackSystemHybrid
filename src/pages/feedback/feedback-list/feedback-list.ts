@@ -10,6 +10,7 @@ import {
 import { Events } from "ionic-angular";
 import { AuthenticationServiceProvider } from "./../../../providers/authentication-service/authentication-service";
 
+import { LocalStorageKeys} from './../../../helper/constants';
 /**
  * Generated class for the FeedbackListPage page.
  *
@@ -25,11 +26,7 @@ import { AuthenticationServiceProvider } from "./../../../providers/authenticati
 export class FeedbackListPage {
   pet: string = "myFeedbacks";
   get user_id() {
-    return Number(localStorage.getItem("user_id"));
-  }
-
-  get SelectedSection() {
-    return String(localStorage.getItem("SectionToBeSelected"));
+    return Number(localStorage.getItem(LocalStorageKeys.user_id));
   }
   public navParams1: NavParams;
   constructor(
@@ -86,8 +83,6 @@ export class FeedbackListPage {
     this.navCtrl.push("FeedbackHistoryPage");
   }
   itemSelected(team_user_id) {
-    //localStorage.setItem("team_user_id", String(team_user_id));
-    //console.log(team_user_id);
     let params = { tabIndex: team_user_id };
     this.navCtrl.push("FeedListPage", params);
   }

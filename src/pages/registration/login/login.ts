@@ -5,6 +5,7 @@ import { AuthenticationServiceProvider } from './../../../providers/authenticati
 import { Events } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Util } from './../../../helper/util';
+import { LocalStorageKeys } from './../../../helper/constants';
 
 /**
  * Generated class for the LoginPage page.
@@ -82,9 +83,9 @@ export class LoginPage {
       reqObj.user_id = user_id;
       let respObj = await this.AuthServiceCall.verifyOTP(reqObj);
       if (respObj.status_code == 200) {
-        localStorage.setItem("user_id", String(user_id));
-        localStorage.setItem("token", respObj.token);
-        localStorage.setItem("user_name", respObj.name);
+        localStorage.setItem(LocalStorageKeys.user_id, String(user_id));
+        localStorage.setItem(LocalStorageKeys.token, respObj.token);
+        localStorage.setItem(LocalStorageKeys.user_name, respObj.name);
         console.log(respObj.name);
         this.events.publish('UserName', respObj.name, Date.now());
         this.navCtrl.push('LandingPage');

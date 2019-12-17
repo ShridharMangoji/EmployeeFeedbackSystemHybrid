@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { RequestModelComponent } from "./../../components/request-model/request-model";
 import { KeyValuePair } from "./../../components/response-model/response-model";
 import { AuthenticationServiceProvider } from "./../../providers/authentication-service/authentication-service";
-
+import { LocalStorageKeys} from './../../helper/constants';
 /**
  * Generated class for the EscalatedUserPage page.
  *
@@ -18,7 +18,7 @@ import { AuthenticationServiceProvider } from "./../../providers/authentication-
 })
 export class EscalatedUserPage {
   get user_id() {
-    return Number(localStorage.getItem("user_id"));
+    return Number(localStorage.getItem(LocalStorageKeys.user_id));
   }
   public escalatedUsers: KeyValuePair[];
   constructor(
@@ -43,7 +43,6 @@ export class EscalatedUserPage {
   }
 
   itemSelected(team_user_id) {
-   // localStorage.setItem("team_user_id", String(team_user_id));
     this.navCtrl.push("FeedListPage");
   }
 }

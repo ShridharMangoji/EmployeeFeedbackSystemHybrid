@@ -3,6 +3,7 @@ import { Platform, NavController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events } from 'ionic-angular';
+import { LocalStorageKeys} from './../helper/constants';
 
 @Component({
   templateUrl: 'app.html'
@@ -11,7 +12,7 @@ export class MyApp {
   rootPage: any = 'LoginPage';
   @ViewChild('content') navCtrl: NavController;
   get user_name() {
-    return String(localStorage.getItem("user_name"));
+    return String(localStorage.getItem(LocalStorageKeys.user_name));
   }
   userName: string = "";
   showSubmenu: boolean = false;
