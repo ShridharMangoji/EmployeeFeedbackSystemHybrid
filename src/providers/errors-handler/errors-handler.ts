@@ -30,9 +30,12 @@ export class ErrorsStatusHandler {
         break;
       case 500:
         alert.showAlert("Server Error", statusMessage);
-       // this.RedirectToLoginPage();
+        // this.RedirectToLoginPage();
         break;
       case 201:
+        alert.showAlert("App", statusMessage);
+        break;
+      case 409:
         alert.showAlert("App", statusMessage);
         break;
     }

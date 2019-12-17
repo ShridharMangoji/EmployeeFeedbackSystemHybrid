@@ -61,7 +61,7 @@ export class FeedbackCreatePage {
     if (this.message!=undefined && this.selectedTeamMember.id !=undefined && this.selectedFeedbackCategory.id !=undefined) {
 
       if (this.message.length > 0 && this.selectedTeamMember.id > 0 && this.selectedFeedbackCategory.id > 0) {
-        this.disableSubmit=true;
+       // this.disableSubmit=true;
         let reqObj = new giveFeedback();
         reqObj.device_id = "abc";
         reqObj.os_type = "Android";
