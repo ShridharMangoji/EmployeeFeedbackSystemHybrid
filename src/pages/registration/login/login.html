@@ -22,7 +22,7 @@
       <div *ngIf="otp_entered">
         <ion-item>
           <ion-label floating>OTP</ion-label>
-          <ion-input #otp type="password"></ion-input>
+          <ion-input #otp type="password" (keypress)="numberOnly($event)"></ion-input>
         </ion-item>
 
         <button  [disabled]="verifyOtpDisable"  class="otp-btn" ion-button color="secondary" round (click)="varifyOtp(otp.value,user_id.value)">Verify
