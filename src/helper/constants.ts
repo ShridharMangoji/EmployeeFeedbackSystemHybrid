@@ -1,8 +1,8 @@
 
 export const constants = {
     production: true,
-    //BaseURL: "http://13.232.165.121/api/api/",//"http://localhost:51731/api/",//"http://localhost/Cool/api/",
-    BaseURL: "http://localhost:51731/api/",//"http://localhost/Cool/api/",
+    BaseURL: "http://13.232.165.121/api/api/",//"http://localhost:51731/api/",//"http://localhost/Cool/api/",
+   // BaseURL: "http://localhost:51731/api/",//"http://localhost/Cool/api/",
     
     GenerateOTP:"Authentication/GenerateOTP",
     VerifyOTP:"Authentication/VerifyOTP",

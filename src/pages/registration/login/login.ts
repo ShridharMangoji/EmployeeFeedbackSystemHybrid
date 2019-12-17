@@ -83,8 +83,8 @@ export class LoginPage {
         this.navCtrl.push('LandingPage');
       }
       else {
-        let alert = new Util(this.alertCtrl);
-        alert.showAlert("Login", respObj.status_message);
+        // let alert = new Util(this.alertCtrl);
+        // alert.showAlert("Login", respObj.status_message);
       }
     } else {
       let alert = new Util(this.alertCtrl);

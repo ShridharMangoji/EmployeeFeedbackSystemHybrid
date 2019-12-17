@@ -35,7 +35,6 @@ export class AuthenticationServiceProvider {
   async escalationUserListCall(
     body: RequestModelComponent
   ): Promise<EscalatedUserListResp> {
-    let obj = new EscalatedUserListResp();
     let requestURL = constants.BaseURL + constants.EscalatedUserList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -68,7 +67,6 @@ export class AuthenticationServiceProvider {
   async escalationUserFeedbackListCall(
     body: RequestModelComponent
   ): Promise<FeedbackListResponse> {
-    let obj = new EscalatedUserListResp();
     let requestURL = constants.BaseURL + constants.FeedbackList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({

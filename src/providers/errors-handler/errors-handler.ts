@@ -22,6 +22,7 @@ export class ErrorsStatusHandler {
     switch (statusCode) {
       case 401:
         alert.showAlert("Server Error", statusMessage);
+        localStorage.clear();
         this.RedirectToLoginPage();
         break;
       case 400:
@@ -29,7 +30,7 @@ export class ErrorsStatusHandler {
         break;
       case 500:
         alert.showAlert("Server Error", statusMessage);
-        this.RedirectToLoginPage();
+       // this.RedirectToLoginPage();
         break;
       case 201:
         alert.showAlert("App", statusMessage);

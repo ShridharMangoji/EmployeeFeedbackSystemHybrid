@@ -97,7 +97,7 @@ export class FeedbackCreatePage {
 
     const confirm = this.alertCtrl.create({
       title: 'Please confirm?',
-      message: 'Are you sure, You want to submit the feedback?',
+      message: 'Are you sure you want to submit the feedback?',
       buttons: [
         {
           text: 'Disagree',
