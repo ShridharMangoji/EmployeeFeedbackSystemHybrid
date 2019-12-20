@@ -15,12 +15,13 @@ import {
   RequestModelComponent,
   giveFeedback,
   feedbackInfo,
-  FeedbackEscalationMapping
+  FeedbackEscalationMapping,
+  feedback
 } from "./../../../components/request-model/request-model";
 import { eFeedbackStatus } from "./../../../helper/constants";
 import { Util } from "./../../../helper/util";
 
-import { LocalStorageKeys} from './../../../helper/constants';
+import { LocalStorageKeys } from './../../../helper/constants';
 /**
  * Generated class for the FeedbackHistoryPage page.
  *
@@ -48,6 +49,7 @@ export class FeedbackHistoryPage {
   public oldMessage: String;
   public oldCategory: String;
   public oldCreatedFor: String;
+  public EscalatedUserName: String;
   public created_on: String;
   public ReplyMessage: String;
   public subject: String;
@@ -65,13 +67,15 @@ export class FeedbackHistoryPage {
   public disableNo = false;
   public disableEscalate = false;
   disableEscalateSubmit = false;
+  public isCreator=false;
+  public feedbackStatusId:Number;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public feedbackServiceCall: FeedbackServiceProvider
-  ) {}
+  ) { }
 
   escalateFeedBack() {
     this.escalateReq = true;
@@ -87,6 +91,7 @@ export class FeedbackHistoryPage {
   }
 
   async ionViewDidLoad() {
+    
     console.log("ionViewDidLoad FeedbackHistoryPage");
     let reqObj = new RequestModelComponent();
     reqObj.device_id = "abc";
@@ -99,6 +104,10 @@ export class FeedbackHistoryPage {
       fcRespObj.feedbackEscalationHistory != null &&
       fcRespObj.feedbackEscalationHistory.length > 0
     ) {
+      if (this.user_id != fcRespObj.feedbackDetails.createdFor){
+        this.EscalatedUserName="Escalated :" + fcRespObj.feedbackDetails.escalatedUserName;
+        this.isCreator=true;
+      }
       this.show_escalation_history = true;
       this.feedbackEscalatedMessages = fcRespObj.feedbackEscalationHistory;
     }
@@ -112,7 +121,7 @@ export class FeedbackHistoryPage {
       this.chat_history = fcRespObj.replyList;
       this.show_reply_history = true;
     }
-
+    this.feedbackStatusId=fcRespObj.feedbackDetails.statusId;
     this.oldSubject = fcRespObj.feedbackDetails.subject;
     this.oldMessage = fcRespObj.feedbackDetails.message;
     this.oldCategory = fcRespObj.feedbackDetails.feedbackCategoryName;
@@ -123,8 +132,6 @@ export class FeedbackHistoryPage {
     let respObj = await this.feedbackServiceCall.teamList(reqObj);
     if (respObj.status_code == 200) {
       this.teamUserList = respObj.userList;
-      //this.feedbackCategoryList=fcRespObj.feedback_categories;
-      // console.log("teamList is fetch "+this.teamUserList[0].name);
     } else {
       console.log("teamList is not fetched");
     }
@@ -198,8 +205,8 @@ export class FeedbackHistoryPage {
 
   showConfirm() {
     const confirm = this.alertCtrl.create({
-      title: "Do you want to submit?",
-      message: "Are you sure, You want to submit this feedback?",
+      title: "Do you want to Escalate?",
+      message: "Are you sure, You want to escalate this feedback?",
       buttons: [
         {
           text: "Disagree",

@@ -10,8 +10,6 @@
   </ion-navbar>
 </ion-header>
 
-
-
 <ion-content padding>
   <ion-card>
     <ion-card-content>
@@ -25,55 +23,101 @@
         {{oldCreatedFor}}
       </p>
       <p>
+        {{EscalatedUserName}}
+      </p>
+
+      <p>
         Raised on: {{created_on}}
       </p>
+      <div [ngSwitch]="feedbackStatusId">
+        <p *ngSwitchCase="1">Status: Work In Progress</p>
+        <p *ngSwitchCase="2">Status: Escalated</p>
+        <p *ngSwitchCase="3">Status: Closed</p>
+        <p *ngSwitchCase="4">Status: Closed</p>
+        <!-- <p *ngSwitchDefault>Standard diet</p> -->
+      </div>
+      
     </ion-card-content>
   </ion-card>
 
-  <div *ngIf="show_reply_history">
-    <ion-label>Chat history</ion-label>
-    <ion-list inset *ngFor="let item of chat_history">
-      <ion-item>
-        <ion-label stacked>{{item.reply_message}}</ion-label>
-      </ion-item>
-    </ion-list>
+  <div *ngIf="show_reply_history && chat_history.length>0">
+    <ion-card>
+      <ion-card-header center>
+        <ion-card-title> Chat history</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="height:100px;overflow:hidden; overflow-y:scroll;">
+          <ion-list inset *ngFor="let item of chat_history">
+            <ion-item class="no_padding">
+              <ion-label class="no_margin" stacked
+                >{{item.reply_message}}</ion-label
+              >
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 
   <div *ngIf="is_reply_button_required">
     <ion-item>
-      <ion-textarea placeholder="Please enter message here..." [(ngModel)]="ReplyMessage">{{message}}</ion-textarea>
+      <ion-textarea
+        placeholder="Please enter message here..."
+        [(ngModel)]="ReplyMessage"
+        >{{message}}</ion-textarea
+      >
     </ion-item>
-    <button center ion-button (click)='Reply()'>Reply</button>
-
+    <div class="center_button" center>
+      <button ion-button (click)="Reply()">Reply</button>
+    </div>
   </div>
-
 
   <div *ngIf="show_escalation_history">
-    <ion-label>Escalation History</ion-label>
-    <ion-list inset *ngFor="let item of feedbackEscalatedMessages">
-      <ion-item>
-        <ion-label stacked>{{item.message}}</ion-label>
-      </ion-item>
-    </ion-list>
+    <ion-card>
+      <ion-card-header center
+        ><ion-card-title>Escalation History</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="height:100px;overflow:hidden; overflow-y:scroll;">
+          <ion-list inset *ngFor="let item of feedbackEscalatedMessages">
+            <ion-item class="no_padding">
+              <ion-label class="no_margin" stacked>{{item.message}}</ion-label>
+              <ion-label class="no_margin" stacked *ngIf="isCreator">Escalated To: {{item.feedback_escalated_username}}</ion-label>
+            </ion-item>
+           
+          </ion-list>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
-
-
 
   <div text-center="" *ngIf="is_escalation_required">
     <!-- <div text-center=""> -->
     <ion-label>Is issue resolved</ion-label>
-    <button [disabled]="disableYes" ion-button (click)="UpdatedStatus(3)">Yes</button>
+    <button [disabled]="disableYes" ion-button (click)="UpdatedStatus(3)">
+      Yes
+    </button>
     <!--ENum =>Closed_yes-->
-    <button [disabled]="disableNo" ion-button (click)="UpdatedStatus(4)">No</button>
+    <button [disabled]="disableNo" ion-button (click)="UpdatedStatus(4)">
+      No
+    </button>
     <!--ENum =>Closed_no-->
-    <button [disabled]="disableEscalate" ion-button (click)="escalateFeedBack()">Escalate</button>
+    <button
+      [disabled]="disableEscalate"
+      ion-button
+      (click)="escalateFeedBack()"
+    >
+      Escalate
+    </button>
   </div>
 
   <ion-list *ngIf="escalateReq">
     <ion-item>
       <ion-label>Escalate to</ion-label>
       <ion-select [(ngModel)]="selectedTeamMember">
-        <ion-option *ngFor="let index of teamUserList" [value]="index.id"> {{index.name}} </ion-option>
+        <ion-option *ngFor="let index of teamUserList" [value]="index.id">
+          {{index.name}}
+        </ion-option>
       </ion-select>
     </ion-item>
     <!-- <ion-item>
@@ -86,10 +130,18 @@
           <ion-input placeholder="Enter Subject" [(ngModel)]="subject"></ion-input>
         </ion-item> -->
     <ion-item>
-      <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message">{{message}}</ion-textarea>
+      <ion-textarea placeholder="Enter feedback here..." [(ngModel)]="message"
+        >{{message}}</ion-textarea
+      >
     </ion-item>
     <ion-item>
-      <button [disabled]="disableEscalateSubmit" ion-button (click)='escalate()'>Escalate</button>
+      <button
+        [disabled]="disableEscalateSubmit"
+        ion-button
+        (click)="escalate()"
+      >
+        Escalate
+      </button>
     </ion-item>
   </ion-list>
 </ion-content>

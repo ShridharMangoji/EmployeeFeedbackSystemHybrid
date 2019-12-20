@@ -45,12 +45,10 @@ export class FeedbackCreatePage {
     reqObj.user_id = this.user_id;
 
     let respObj = await this.feedbackServiceCall.teamList(reqObj);
-    debugger;
     let fcRespObj = await this.feedbackServiceCall.feedbackCategoryList(reqObj);
     if (respObj.status_code == 200) {
       this.teamUserList = respObj.userList;
       this.feedbackCategoryList = fcRespObj.feedback_categories;
-      debugger;
       console.log("teamList is fetch " + this.teamUserList[0].name);
     }
     else {

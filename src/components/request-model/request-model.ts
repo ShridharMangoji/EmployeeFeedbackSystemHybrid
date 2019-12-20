@@ -50,6 +50,7 @@ export class feedback{
   createdForName:String;
   feedbackCategoryName:String;
   strCreatedOn:string;
+  escalatedUserName:string;
   // createdForNavigation:KeyValuePair;
   // feedbackCategory:KeyValuePair;
 }
@@ -59,4 +60,5 @@ export class FeedbackEscalationMapping{
   Message: String;
   FeedbackId: Number;
   EscalatedUserId: Number;
+  feedback_escalated_username:String;
 }

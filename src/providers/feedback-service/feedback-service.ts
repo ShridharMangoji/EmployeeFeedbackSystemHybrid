@@ -35,7 +35,6 @@ export class FeedbackServiceProvider {
 
   async teamList(body: RequestModelComponent): Promise<TeamListResponse> {
     let requestURL = constants.BaseURL + constants.TeamList;
-    debugger;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
@@ -68,7 +67,6 @@ export class FeedbackServiceProvider {
     body: RequestModelComponent
   ): Promise<FeedbackDetailListResp> {
     let requestURL = constants.BaseURL + "Feedback/FeedbackDetailList";
-    debugger;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
@@ -101,7 +99,6 @@ export class FeedbackServiceProvider {
     body: RequestModelComponent
   ): Promise<FeedbackDetailListResp> {
     let requestURL = constants.BaseURL + "Feedback/FeedbackDetailList";
-    debugger;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
