@@ -18,13 +18,13 @@
   <ion-list>
     <ion-item>
       <ion-label>Feedback to</ion-label>
-      <ion-select [(ngModel)]="selectedTeamMember">
+      <ion-select [(ngModel)]="selectedTeamMember" (ngModelChange)="HideAndShowCategory()">
         <ion-option  *ngFor="let index of teamUserList" [value]="index" > {{index.name}} </ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Feedback Category</ion-label>
-      <ion-select [(ngModel)]="selectedFeedbackCategory">
+      <ion-select [(ngModel)]="selectedFeedbackCategory" [disabled]="!disableFeedbackCategory">
         <ion-option  *ngFor="let index of feedbackCategoryList" [value]="index" > {{index.name}} </ion-option>
       </ion-select>
     </ion-item>

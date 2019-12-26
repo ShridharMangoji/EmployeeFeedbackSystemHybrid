@@ -5,7 +5,7 @@ import { FeedbackServiceProvider } from './../../../providers/feedback-service/f
 import { RequestModelComponent, giveFeedback, feedbackInfo } from './../../../components/request-model/request-model';
 import { Util } from './../../../helper/util';
 
-import { LocalStorageKeys} from './../../../helper/constants';
+import { LocalStorageKeys } from './../../../helper/constants';
 /**
  * Generated class for the FeedbackCreatePage page.
  *
@@ -29,7 +29,8 @@ export class FeedbackCreatePage {
   public message: string;
   public selectedTeamMember: KeyValuePair;
   public selectedFeedbackCategory: KeyValuePair;
-  public disableSubmit=false;
+  public disableSubmit = false;
+  public disableFeedbackCategory = false;
 
   constructor(public menuCtrl: MenuController,
     public feedbackServiceCall: FeedbackServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
@@ -37,13 +38,10 @@ export class FeedbackCreatePage {
   }
 
   async ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedbackCreatePage12121');
-
     let reqObj = new RequestModelComponent();
     reqObj.device_id = "abc";
     reqObj.os_type = "Android";
     reqObj.user_id = this.user_id;
-
     let respObj = await this.feedbackServiceCall.teamList(reqObj);
     let fcRespObj = await this.feedbackServiceCall.feedbackCategoryList(reqObj);
     if (respObj.status_code == 200) {
@@ -58,10 +56,10 @@ export class FeedbackCreatePage {
 
   async submitGivenFeedback() {
 
-    if (this.message!=undefined && this.selectedTeamMember.id !=undefined && this.selectedFeedbackCategory.id !=undefined) {
+    if (this.message != undefined && this.selectedTeamMember.id != undefined && this.selectedFeedbackCategory.id != undefined) {
 
       if (this.message.length > 0 && this.selectedTeamMember.id > 0 && this.selectedFeedbackCategory.id > 0) {
-       // this.disableSubmit=true;
+        // this.disableSubmit=true;
         let reqObj = new giveFeedback();
         reqObj.device_id = "abc";
         reqObj.os_type = "Android";
@@ -87,14 +85,13 @@ export class FeedbackCreatePage {
         let alert = new Util(this.alertCtrl);
         alert.showAlert("Feedback Create", "Please enter all the mandatory fields");
       }
-    }else{
+    } else {
       let alert = new Util(this.alertCtrl);
       alert.showAlert("Feedback Create", "Please enter all the mandatory fields");
     }
   }
 
   async submitFeedback() {
-
     const confirm = this.alertCtrl.create({
       title: 'Please confirm?',
       message: 'Are you sure you want to submit the feedback?',
@@ -108,9 +105,7 @@ export class FeedbackCreatePage {
         {
           text: 'Agree',
           handler: () => {
-
             this.submitGivenFeedback();
-
           }
         }
       ]
@@ -118,5 +113,14 @@ export class FeedbackCreatePage {
     confirm.present();
   }
 
+
+  HideAndShowCategory() {
+    if (this.selectedTeamMember.id != undefined && this.selectedTeamMember.id <= 0) {
+      this.disableFeedbackCategory = false;
+    }
+    else {
+      this.disableFeedbackCategory = true;
+    }
+  }
 
 }
