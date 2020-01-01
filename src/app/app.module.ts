@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 import { FeedbackServiceProvider } from '../providers/feedback-service/feedback-service';
+import { Device } from '@ionic-native/device';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FeedbackServiceProvider } from '../providers/feedback-service/feedback-
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthenticationServiceProvider,
     FeedbackServiceProvider,
+    Device
     //ErrorsHandlerProvider
   ]
 })

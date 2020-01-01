@@ -24,23 +24,19 @@ export class LoginPage {
   public otp_entered = false;
   otpDisable = false;
   verifyOtpDisable = false;
-  public userID:string;
+  public userID: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public AuthServiceCall: AuthenticationServiceProvider, public events: Events, public alertCtrl: AlertController
-  ) {
+    public AuthServiceCall: AuthenticationServiceProvider, public events: Events, public alertCtrl: AlertController) {
 
 
   }
-
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-
   }
 
-  UpdateUserID(){
-    this.otpDisable=false;
+  UpdateUserID() {
+    this.otpDisable = false;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -52,7 +48,7 @@ export class LoginPage {
   }
   async GenerateOTP(strUser_id: Number) {
     console.log(strUser_id)
-    console.log("Check=>"+this.userID)
+    console.log("Check=>" + this.userID)
     if (strUser_id > 0) {
       this.otpDisable = true;
       var user_id = +strUser_id;
@@ -89,10 +85,6 @@ export class LoginPage {
         console.log(respObj.name);
         this.events.publish('UserName', respObj.name, Date.now());
         this.navCtrl.push('LandingPage');
-      }
-      else {
-        // let alert = new Util(this.alertCtrl);
-        // alert.showAlert("Login", respObj.status_message);
       }
     } else {
       let alert = new Util(this.alertCtrl);

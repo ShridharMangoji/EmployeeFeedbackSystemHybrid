@@ -15,6 +15,8 @@ import { AlertController } from "ionic-angular";
 import { Util } from "./../../helper/util";
 import { App } from "ionic-angular";
 import { ErrorsStatusHandler } from "./../errors-handler/errors-handler";
+import { DeviceDetails } from './../../helper/deviceDetails';
+import { Device } from '@ionic-native/device';
 /*
   Generated class for the AuthenticationServiceProvider provider.
 
@@ -23,14 +25,11 @@ import { ErrorsStatusHandler } from "./../errors-handler/errors-handler";
 */
 @Injectable()
 export class AuthenticationServiceProvider {
-  //public http:HttpClient;
-  constructor(
-    public app: App,
-    public http: HttpClient,
-    public alertCtrl: AlertController
-  ) {
+ 
+  constructor(public app: App, public http: HttpClient, public alertCtrl: AlertController, public device: Device) {
     console.log("Hello AuthenticationServiceProvider Provider");
   }
+  public device_id=new DeviceDetails(this.device).GetDeviceUUID();
 
   async escalationUserListCall(
     body: RequestModelComponent

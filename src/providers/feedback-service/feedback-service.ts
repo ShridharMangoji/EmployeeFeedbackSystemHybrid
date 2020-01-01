@@ -18,7 +18,8 @@ import { AlertController } from "ionic-angular";
 import { Util } from "./../../helper/util";
 import { App } from "ionic-angular";
 import { ErrorsStatusHandler } from "./../errors-handler/errors-handler";
-
+import { DeviceDetails } from './../../helper/deviceDetails';
+import { Device } from '@ionic-native/device';
 /*
   Generated class for the FeedbackServiceProvider provider.
 
@@ -27,12 +28,12 @@ import { ErrorsStatusHandler } from "./../errors-handler/errors-handler";
 */
 @Injectable()
 export class FeedbackServiceProvider {
-  constructor(public app: App,
-    public http: HttpClient,
-    public alertCtrl: AlertController) {
+  constructor(public app: App, public http: HttpClient, public alertCtrl: AlertController, public device: Device) {
     console.log("Hello FeedbackServiceProvider Provider");
   }
-
+  
+  public device_id = new DeviceDetails(this.device).GetDeviceUUID();
+  
   async teamList(body: RequestModelComponent): Promise<TeamListResponse> {
     let requestURL = constants.BaseURL + constants.TeamList;
     let requestBody = JSON.stringify(body);
@@ -94,7 +95,7 @@ export class FeedbackServiceProvider {
       );
     return resp;
   }
-  
+
   public FeedbackDetailListv2(
     body: RequestModelComponent
   ): Promise<FeedbackDetailListResp> {
