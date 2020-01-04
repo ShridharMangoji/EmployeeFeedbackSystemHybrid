@@ -3,8 +3,6 @@ import { AlertController } from 'ionic-angular';
 
 export abstract  class PassingParameter{
     public static tabNavigation:string;
-   
-    
 }
 
 export class Util{
