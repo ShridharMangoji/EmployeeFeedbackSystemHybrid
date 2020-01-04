@@ -3,7 +3,9 @@ import { Platform, NavController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events } from 'ionic-angular';
-import { LocalStorageKeys} from './../helper/constants';
+import { LocalStorageKeys } from './../helper/constants';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { PushNotification } from './../helper/pushNotification';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +22,7 @@ export class MyApp {
 
 
 
-  constructor(public events: Events, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
+  constructor(public fcm:FCM,public events: Events, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
     events.subscribe('UserName', (user) => {
       this.userName = user;
     });
@@ -33,16 +35,14 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      new PushNotification(fcm).Notification();
     });
-
-
-
   }
   menuItemHandler() {
     this.showSubmenu = !this.showSubmenu;
   }
   openPage(pageName: any) {
-    let params={};
+    let params = {};
     switch (pageName) {
       case "List":
         this.navCtrl.push('FeedbackListPage')
@@ -56,23 +56,23 @@ export class MyApp {
       case "MyFeedback":
         {
           //let tabName="myFeedbacks";
-          params={tabIndex:'myFeedbacks'};
-          this.navCtrl.push('FeedbackListPage',params);
+          params = { tabIndex: 'myFeedbacks' };
+          this.navCtrl.push('FeedbackListPage', params);
           break;
         }
       case "FeedbackForMe":
         {
-          params={tabIndex:"feedbacksForMe"};
-        //  PassingParameter.tabNavigation="feedbacksForMe";
-         // this.events.publish("SectionToBeSelected", "feedbacksForMe");
-         this.navCtrl.push('FeedbackListPage',params);
+          params = { tabIndex: "feedbacksForMe" };
+          //  PassingParameter.tabNavigation="feedbacksForMe";
+          // this.events.publish("SectionToBeSelected", "feedbacksForMe");
+          this.navCtrl.push('FeedbackListPage', params);
           break;
         }
       case "EscalationFeedback":
         {
-          params={tabIndex:"escalatedFeedback"};
+          params = { tabIndex: "escalatedFeedback" };
           //this.events.publish("SectionToBeSelected", "escalatedFeedback");
-          this.navCtrl.push('FeedbackListPage',params);
+          this.navCtrl.push('FeedbackListPage', params);
           break;
         }
     }

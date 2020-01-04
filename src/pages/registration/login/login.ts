@@ -6,6 +6,8 @@ import { Events } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Util } from './../../../helper/util';
 import { LocalStorageKeys } from './../../../helper/constants';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { PushNotification } from './../../../helper/pushNotification';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,7 +28,7 @@ export class LoginPage {
   verifyOtpDisable = false;
   public userID:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fcm :FCM,
     public AuthServiceCall: AuthenticationServiceProvider, public events: Events, public alertCtrl: AlertController
   ) {
 
@@ -86,7 +88,9 @@ export class LoginPage {
         localStorage.setItem(LocalStorageKeys.user_id, String(user_id));
         localStorage.setItem(LocalStorageKeys.token, respObj.token);
         localStorage.setItem(LocalStorageKeys.user_name, respObj.name);
-        console.log(respObj.name);
+
+       var fcm_token= new PushNotification(this.fcm).GenerateToken();
+       localStorage.setItem(LocalStorageKeys.fcm_token, fcm_token);
         this.events.publish('UserName', respObj.name, Date.now());
         this.navCtrl.push('LandingPage');
       }

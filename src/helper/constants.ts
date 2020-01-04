@@ -20,7 +20,8 @@ export const LocalStorageKeys = {
   user_id: "user_id",
   token: "token",
   user_name: "user_name",
-  selected_feedback_id: "selected_feedback_id"
+  selected_feedback_id: "selected_feedback_id",
+  fcm_token: "fcm_token"
 }
 
 export enum eFeedbackStatus {
