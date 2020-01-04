@@ -18,6 +18,7 @@ import { AlertController } from "ionic-angular";
 import { Util } from "./../../helper/util";
 import { App } from "ionic-angular";
 import { ErrorsStatusHandler } from "./../errors-handler/errors-handler";
+import { HttpUtil } from "./../../helper/httpUtil";
 
 /*
   Generated class for the FeedbackServiceProvider provider.
@@ -33,16 +34,18 @@ export class FeedbackServiceProvider {
     console.log("Hello FeedbackServiceProvider Provider");
   }
 
+
+
+
   async teamList(body: RequestModelComponent): Promise<TeamListResponse> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + constants.TeamList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
     });
     let options = { headers: headers };
-    const resp = await this.http
-      .post<TeamListResponse>(requestURL, requestBody, options)
-      .toPromise() //;
+    const resp = await this.http      .post<TeamListResponse>(requestURL, requestBody, options)      .toPromise()
       .then(
         res => {
           console.log(res);
@@ -63,9 +66,8 @@ export class FeedbackServiceProvider {
     return resp;
   }
 
-  FeedbackDetailList(
-    body: RequestModelComponent
-  ): Promise<FeedbackDetailListResp> {
+  FeedbackDetailList(    body: RequestModelComponent  ): Promise<FeedbackDetailListResp> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + "Feedback/FeedbackDetailList";
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -94,10 +96,9 @@ export class FeedbackServiceProvider {
       );
     return resp;
   }
-  
-  public FeedbackDetailListv2(
-    body: RequestModelComponent
-  ): Promise<FeedbackDetailListResp> {
+
+  public FeedbackDetailListv2(    body: RequestModelComponent  ): Promise<FeedbackDetailListResp> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + "Feedback/FeedbackDetailList";
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -126,9 +127,8 @@ export class FeedbackServiceProvider {
       );
     return resp;
   }
-  async FeedbackEscalationTeam(
-    body: RequestModelComponent
-  ): Promise<TeamListResponse> {
+  async FeedbackEscalationTeam(    body: RequestModelComponent  ): Promise<TeamListResponse> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + constants.EscalatedUserList;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -158,9 +158,8 @@ export class FeedbackServiceProvider {
     return resp;
   }
 
-  async feedbackCategoryList(
-    body: RequestModelComponent
-  ): Promise<feedbackCategoryResponse> {
+  async feedbackCategoryList(    body: RequestModelComponent  ): Promise<feedbackCategoryResponse> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + constants.FeedbackCategory;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -190,9 +189,8 @@ export class FeedbackServiceProvider {
     return resp;
   }
 
-  async FeedbackHistory(
-    body: RequestModelComponent
-  ): Promise<FeedbackHistoryResp> {
+  async FeedbackHistory(    body: RequestModelComponent  ): Promise<FeedbackHistoryResp> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + constants.FeedbackHistory;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -223,6 +221,7 @@ export class FeedbackServiceProvider {
   }
 
   async giveFeedback(body: giveFeedback): Promise<ResponseModelComponent> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + constants.UpdateFeedback;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
@@ -253,6 +252,7 @@ export class FeedbackServiceProvider {
   }
 
   async Reply(body: replyReq): Promise<ResponseModelComponent> {
+    HttpUtil.DefaultParameter(body);
     let requestURL = constants.BaseURL + constants.ReplyToFeedback;
     let requestBody = JSON.stringify(body);
     let headers = new HttpHeaders({
