@@ -6,8 +6,9 @@ import { Events } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Util } from './../../../helper/util';
 import { LocalStorageKeys } from './../../../helper/constants';
-import { FCM } from '@ionic-native/fcm/ngx';
+import { FCM } from '@ionic-native/fcm';
 import { PushNotification } from './../../../helper/pushNotification';
+import { Platform } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,9 +27,9 @@ export class LoginPage {
   public otp_entered = false;
   otpDisable = false;
   verifyOtpDisable = false;
-  public userID:string;
+  public userID: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fcm :FCM,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fcm: FCM, public platform: Platform,
     public AuthServiceCall: AuthenticationServiceProvider, public events: Events, public alertCtrl: AlertController
   ) {
 
@@ -41,8 +42,8 @@ export class LoginPage {
 
   }
 
-  UpdateUserID(){
-    this.otpDisable=false;
+  UpdateUserID() {
+    this.otpDisable = false;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -54,7 +55,7 @@ export class LoginPage {
   }
   async GenerateOTP(strUser_id: Number) {
     console.log(strUser_id)
-    console.log("Check=>"+this.userID)
+    console.log("Check=>" + this.userID)
     if (strUser_id > 0) {
       this.otpDisable = true;
       var user_id = +strUser_id;
@@ -65,6 +66,7 @@ export class LoginPage {
       let respObj = await this.AuthServiceCall.generateOTP(reqObj);
       if (respObj.status_code == 200) {
         this.otp_entered = true;
+        new PushNotification(this.platform, this.fcm).GenerateToken();
       }
     }
     else {
@@ -89,8 +91,6 @@ export class LoginPage {
         localStorage.setItem(LocalStorageKeys.token, respObj.token);
         localStorage.setItem(LocalStorageKeys.user_name, respObj.name);
 
-       var fcm_token= new PushNotification(this.fcm).GenerateToken();
-       localStorage.setItem(LocalStorageKeys.fcm_token, fcm_token);
         this.events.publish('UserName', respObj.name, Date.now());
         this.navCtrl.push('LandingPage');
       }

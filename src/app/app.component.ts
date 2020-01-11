@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events } from 'ionic-angular';
 import { LocalStorageKeys } from './../helper/constants';
-import { FCM } from '@ionic-native/fcm/ngx';
+import { FCM } from '@ionic-native/fcm';
 import { PushNotification } from './../helper/pushNotification';
 
 @Component({
@@ -22,7 +22,7 @@ export class MyApp {
 
 
 
-  constructor(public fcm:FCM,public events: Events, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
+  constructor(public fcm:FCM,public events: Events,public platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
     events.subscribe('UserName', (user) => {
       this.userName = user;
     });
@@ -35,7 +35,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      new PushNotification(fcm).Notification();
+      new PushNotification(this.platform,this.fcm).Notification();
     });
   }
   menuItemHandler() {
@@ -55,7 +55,6 @@ export class MyApp {
         break;
       case "MyFeedback":
         {
-          //let tabName="myFeedbacks";
           params = { tabIndex: 'myFeedbacks' };
           this.navCtrl.push('FeedbackListPage', params);
           break;
@@ -63,15 +62,12 @@ export class MyApp {
       case "FeedbackForMe":
         {
           params = { tabIndex: "feedbacksForMe" };
-          //  PassingParameter.tabNavigation="feedbacksForMe";
-          // this.events.publish("SectionToBeSelected", "feedbacksForMe");
           this.navCtrl.push('FeedbackListPage', params);
           break;
         }
       case "EscalationFeedback":
         {
           params = { tabIndex: "escalatedFeedback" };
-          //this.events.publish("SectionToBeSelected", "escalatedFeedback");
           this.navCtrl.push('FeedbackListPage', params);
           break;
         }

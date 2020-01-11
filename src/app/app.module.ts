@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 import { FeedbackServiceProvider } from '../providers/feedback-service/feedback-service';
-import { FCM } from '@ionic-native/fcm/ngx';
+import { FCM } from '@ionic-native/fcm';
 
 @NgModule({
   declarations: [

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "162151436309",
+    "firebase_url": "https://feedbacksystem-e5fae.firebaseio.com",
+    "project_id": "feedbacksystem-e5fae",
+    "storage_bucket": "feedbacksystem-e5fae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162151436309:android:5664ff11089422ee1a3e1c",
+        "android_client_info": {
+          "package_name": "com.feedback.mFeed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162151436309-sj54b1srm93a31mamvmprjk5ov6l56ta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1lwLb6fxBPg-LEt9dXlz-YkVe67XOV-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162151436309-sj54b1srm93a31mamvmprjk5ov6l56ta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

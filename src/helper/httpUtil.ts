@@ -4,5 +4,6 @@ import { LocalStorageKeys } from "./../helper/constants";
 export class HttpUtil {
     static DefaultParameter(model: RequestModelComponent) {
         model.token = localStorage.getItem(LocalStorageKeys.token);
+        model.fcm_token= localStorage.getItem(LocalStorageKeys.fcm_token);
     }
 }
