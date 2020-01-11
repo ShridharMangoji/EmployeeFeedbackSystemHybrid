@@ -1,10 +1,10 @@
-import { FCM } from '@ionic-native/fcm';
-import { Platform } from 'ionic-angular';
+import { FCM, NotificationData } from '@ionic-native/fcm';
+import { Platform, NavController } from 'ionic-angular';
 
 import { constants, LocalStorageKeys } from './../helper/constants';
 
 export class PushNotification {
-    constructor(public platform: Platform, public fcm: FCM) { }
+    constructor(public platform: Platform, public fcm: FCM,public navCtrl: NavController, ) { }
 
     GenerateToken(): string {
         let strToken: string;
@@ -25,11 +25,18 @@ export class PushNotification {
         if (constants.Android) {
             this.fcm.onNotification().subscribe(data => {
                 if (data.wasTapped) {
-                    console.log("Received in background" + data);
+                    console.log("Received in background" + JSON.stringify(data));
+                   
                 } else {
-                    console.log("Received in foreground" + data);
+                    console.log("Received in foreground" + JSON.stringify(data));
                 };
+                this.OnClickPushNotification(data);
             });
         }
+    }
+
+    OnClickPushNotification(data: NotificationData) {
+        let params = { feedbackID: data.id, notificationType: data.type };
+        this.navCtrl.push('FeedbackHistoryPage', params);
     }
 }

@@ -66,7 +66,7 @@ export class LoginPage {
       let respObj = await this.AuthServiceCall.generateOTP(reqObj);
       if (respObj.status_code == 200) {
         this.otp_entered = true;
-        new PushNotification(this.platform, this.fcm).GenerateToken();
+        new PushNotification(this.platform, this.fcm,this.navCtrl).GenerateToken();
       }
     }
     else {

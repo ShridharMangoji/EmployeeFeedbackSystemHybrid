@@ -40,7 +40,9 @@ export class FeedbackHistoryPage {
   }
 
   get selected_feedback_id() {
-    return Number(localStorage.getItem(LocalStorageKeys.selected_feedback_id));
+    console.log("Test data"+this.navParams.data.feedbackID)
+    return  this.navParams.data.feedbackID;
+    //return Number(localStorage.getItem(LocalStorageKeys.selected_feedback_id));
   }
   public feedbackStatusEnum = eFeedbackStatus;
   public teamUserList: KeyValuePair[];

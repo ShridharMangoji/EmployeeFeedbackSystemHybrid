@@ -78,9 +78,9 @@ export class FeedbackListPage {
 
   feedbackSelected(item: string) {
     console.log(item);
+    let params = { feedbackID: item };
     localStorage.setItem("selected_feedback_id", String(item));
-
-    this.navCtrl.push("FeedbackHistoryPage");
+    this.navCtrl.push('FeedbackHistoryPage', params);
   }
   itemSelected(team_user_id) {
     let params = { tabIndex: team_user_id };
